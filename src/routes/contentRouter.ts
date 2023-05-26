@@ -11,4 +11,5 @@ contentRoute.post("/update", checkJwt, contentInstance.updateContent);
 contentRoute.post("/get", contentInstance.getContent);
 // contentRoute.post("/interact", contentInstance.interact);
 contentRoute.post("/delete", contentInstance.deleteContent);
+contentRoute.post("/delete", contentInstance.recommend);
 

@@ -14,6 +14,7 @@ export interface IContentRepo {
     getContent(model: any): Promise<any>;
     deleteContent(model: any): Promise<any>
     interact(model: any): Promise<any>
+    getRecommendations(model:any):Promise<any>;
 }
 
 export class ContentRepository implements IContentRepo {
@@ -221,6 +222,14 @@ export class ContentRepository implements IContentRepo {
             throw Error(error);
         }
 
+    }
+    getRecommendations= async(model:any)=>{
+        try{
+            
+        }
+        catch(error){
+            throw Error(error);
+        }
     }
 
 }

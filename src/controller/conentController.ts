@@ -61,7 +61,7 @@ export class ContentController {
             res.status(200).send("deleted");
         }
         catch (error) {
-            throw Error(error);
+            res.status(401).send(error)
         }
     }
     interact = async (req, res) => {
@@ -72,6 +72,16 @@ export class ContentController {
         }
         catch (error) {
             throw Error(error);
+        }
+    }
+    recommend = async (req, res) => {
+        try {
+            let model = req.body;
+            let recommendations = await this._contentRepository.getRecommendations(model);
+            res.status(200).send(recommendations)
+        }
+        catch (error) {
+            res.status(401).send(error)
         }
     }
 
