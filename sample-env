@@ -1,0 +1,7 @@
+PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=sakib1
+DB_PASS=sakib123
+DB_DIALECT=postgres
+DB_NAME=geekbangla_dev
