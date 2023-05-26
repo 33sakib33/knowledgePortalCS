@@ -13,16 +13,22 @@ export interface ICommentRepo {
 }
 
 export class CommentRepository implements ICommentRepo {
-    createComment = async (comment: any) => {
+    createComment = async (model: any) => {
         let txn;
         try {
+            // comment["parentCommentId"]= 1;
+            let comment = model.comment
             txn = await sequelize.transaction();
+            console.log("hello")
             let commentObj = new Comment({
-                parentCommentId: comment.parentCommentId,
+                // parentCommentId: comment.parentCommentId,
                 title: comment.title,
                 text: comment.text,
-                createdBy: comment.userid
+                createdBy: comment.userid,
+                contentId: comment.contentId
             });
+            console.log("hello")
+
             await commentObj.save({ transaction: txn });
 
             await txn.commit();
