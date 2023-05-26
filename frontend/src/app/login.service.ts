@@ -10,18 +10,18 @@ export class LoginService {
 
   API_URL = "http://localhost:3000/geekbangla/api/user"
   //API_URL = "192.168.0.101:3000/"
-  
+
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
 
-  login(data : any) {
+  login(data: any) {
     // Perform authentication logic, e.g., make an API call to verify credentials
     return this.http.post<any>(`${this.API_URL}/login`, data);
   }
 
-  register(data : any){
-    return this.http.post<any>(`${this.API_URL}/register`, data);
+  register(data: any) {
+    return this.http.post<any>(`${this.API_URL}/create`, data);
   }
 
   logout(): void {

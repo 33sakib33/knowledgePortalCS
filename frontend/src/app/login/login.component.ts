@@ -11,41 +11,41 @@ import { LoginService } from '../login.service';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private loginService:LoginService, private route: Router, private cookieService : CookieService) {
-    }
-    username : string = "";
-    password :string = "";
-    
-    ngOnInit(): void {
-    }
-   
-    login(){
-      if(this.username != "" && this.password != "")
-      {
-        console.log("logging in")
-        var data = {
-          userName: this.username,
-          password: this.password
-        }
+  constructor(private loginService: LoginService, private route: Router, private cookieService: CookieService) {
+  }
+  email: string = "";
+  password: string = "";
 
-        this.loginService.login(data).subscribe(
-          response => {
-            // Assuming authentication is successful, store the token and user details in localStorage
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('user', JSON.stringify(response.user));
-            console.log(response)
-            this.cookieService.set('token', response['token'])
-          },
-          error => {
-            // Handle authentication error
-            console.error('Login failed:', error);
-          }
-        );
+  ngOnInit(): void {
+  }
+
+  login() {
+    if (this.email != "" && this.password != "") {
+      console.log("logging in")
+      var data = {
+        email: this.email,
+        password: this.password
       }
-    }
 
-    register(){
-      this.route.navigate(['register'])
+      this.loginService.login(data).subscribe(
+        response => {
+          // Assuming authentication is successful, store the token and user details in localStorage
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('user', JSON.stringify(response.userName));
+          console.log(response)
+          this.cookieService.set('token', response['token'])
+          this.route.navigate([''])
+        },
+        error => {
+          // Handle authentication error
+          console.error('Login failed:', error);
+        }
+      );
     }
+  }
+
+  register() {
+    this.route.navigate(['register'])
+  }
 
 }

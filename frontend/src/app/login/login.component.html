@@ -240,11 +240,11 @@
 										<div class="section text-center">
 											<h4 style="color: white;" class="mb-4 pb-3 ">Sign In</h4>
 											<div class="form-group">
-												<input type="text" name="logemail" class="form-style" placeholder="Your username" id="logemail" autocomplete="off" [(ngModel)]="username" [ngModelOptions]="{standalone:true}" required minlength="6" maxlength="14" >
+												<input type="text" name="logemail" class="form-style" placeholder="Your username" id="logemail" autocomplete="off" [(ngModel)]="email" [ngModelOptions]="{standalone:true}" required minlength="1" maxlength="10000" >
 												<i class="input-icon uil uil-at"></i>
 											</div>	
 											<div class="form-group mt-2">
-												<input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off" [(ngModel)]="password" [ngModelOptions]="{standalone:true}" required minlength="6" maxlength="14" >
+												<input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off" [(ngModel)]="password" [ngModelOptions]="{standalone:true}" required minlength="1" maxlength="100000" >
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
 											<a (click)="login()" class="btn mt-4">submit</a>

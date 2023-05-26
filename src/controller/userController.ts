@@ -26,7 +26,9 @@ export class UserController {
       }
       await this._userRepository.createUser(userObject);
 
-      return res.status(201).send("Creation Done");
+      return res.status(201).json({
+        "status": "created"
+      });
     } catch (error) {
 
       return res.status(404).send("failed");
@@ -59,7 +61,7 @@ export class UserController {
 
   getUser = async (req, res) => {
     try {
-      let model= req.body;
+      let model = req.body;
       let userList = await this._userRepository.getUser(model);
       console.log(userList)
       res.status(200).send(userList);

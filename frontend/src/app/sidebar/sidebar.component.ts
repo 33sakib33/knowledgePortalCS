@@ -10,15 +10,20 @@ import { LoginService } from '../login.service';
 export class SidebarComponent implements OnInit {
 
   authenticated = false;
-  constructor(private loginService : LoginService, private route : Router) { }
-
+  constructor(private loginService: LoginService, private route: Router) { }
+  isLoggedIn = false;
+  userName = "";
   ngOnInit(): void {
+    this.isLoggedIn = this.loginService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.userName = this.loginService.getUserDetails();
+    }
   }
 
   logout(): void {
     this.loginService.logout();
   }
-  login(){
+  login() {
     console.log("here")
     this.route.navigate(['login']);
   }

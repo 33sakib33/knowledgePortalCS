@@ -15,7 +15,10 @@ export class UserService {
   // API_URL_2 = 'http://127.0.0.1/status'
   // API_URL_3 = 'http://127.0.0.1/story'
 
-
+  getUserName= ()=>{
+    const userString = localStorage.getItem('user');
+    return userString ? JSON.parse(userString) : null;
+  }
   API_URL_1 = 'http://10.100.103.50/auth'
   API_URL_2 = 'http://10.100.103.50/status'
   API_URL_3 = 'http://10.100.103.50/story'

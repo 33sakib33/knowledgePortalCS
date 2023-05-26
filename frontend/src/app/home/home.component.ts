@@ -4,6 +4,7 @@ import { Post } from '../post';
 import { Story } from '../story';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { LoginService } from '../login.service';
+import { ContentService } from '../content.service';
 
 
 @Component({
@@ -12,21 +13,21 @@ import { LoginService } from '../login.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  domsanitizer : DomSanitizer | undefined
+  domsanitizer: DomSanitizer | undefined
 
-  constructor(private loginService: LoginService, private route : Router,  private sanitizer: DomSanitizer) { }
-  isLoggedIn : boolean = false;
-  postText : string = "";
-  
-  image:any
-  uid:any
+  constructor(private loginService: LoginService, private contentService: ContentService, private route: Router, private sanitizer: DomSanitizer) { }
+  isLoggedIn: boolean = false;
+  postText: string = "";
+
+  image: any
+  uid: any
   uploadata = new FormData();
-  
-  stories : Story[] = []
-  posts : Post[] = []
-  images : String[] = []
 
-  urls : SafeUrl[] = [];
+  stories: Story[] = []
+  posts: Post[] = []
+  images: String[] = []
+
+  urls: SafeUrl[] = [];
 
   minioUrl = "http://10.100.103.50/story/story/"
 
@@ -34,23 +35,36 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.loginService.isLoggedIn();
-    if(!this.isLoggedIn){
+    if (!this.isLoggedIn) {
       //alert("Logged In as .. " + String(this.username))
       //this.getStories();
       //this.getFeed();
     }
+    this.getContent();
+
   }
 
-  private getUser(){
+  private getUser() {
     return localStorage.getItem('username') || "";
   }
-  
-  onChanged(event:any){
+  getContent = () => {
+    this.contentService.getAllContent().subscribe(
+      response => {
+        console.log(response);
+        // this.route.navigate(['login']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
+  }
+  onChanged(event: any) {
     this.image = event.target.files[0];
     this.uploadata.append('image', this.image);
   }
 
-  logout(): void{
+  logout(): void {
     this.loginService.logout();
     this.route.navigate(['login']);
   }
@@ -92,7 +106,7 @@ export class HomeComponent implements OnInit {
   //       console.log(this.images)
   //     });
   //     console.log(this.stories)
-      
+
   //   });
   // }
 

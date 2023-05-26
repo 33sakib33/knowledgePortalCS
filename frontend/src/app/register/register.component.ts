@@ -10,41 +10,40 @@ import { LoginService } from '../login.service';
 })
 export class RegisterComponent implements OnInit {
 
-  fullname : string = "";
-  username : string = "";
-  password :string = "";
-  email : string = "";
+  fullname: string = "";
+  username: string = "";
+  password: string = "";
+  email: string = "";
 
-  constructor(private loginService : LoginService, private route : Router, private cookieService : CookieService) { }
+  constructor(private loginService: LoginService, private route: Router, private cookieService: CookieService) { }
 
   ngOnInit(): void {
   }
-  
-  register(){
-    if(this.fullname = "" && this.username != "" && this.password != "" && this.email != "")
-      {
-        console.log("Registering User")
-        var data = {
-          fullName:this.fullname,
-          email:this.email,
-          userName:this.username,
-          password:this.password
-        }
 
-        this.loginService.register(data).subscribe(
-          response => {
-            console.log(response);
-            this.route.navigate(['login']);
-          },
-          error => {
-            // Handle authentication error
-            console.error('Registration failed:', error);
-          }
-        );
+  register() {
+    if (this.username != "" && this.password != "" && this.email != "") {
+      console.log("Registering User")
+      var data = {
+        fullName: "placeholder",
+        email: this.email,
+        userName: this.username,
+        password: this.password
       }
-    }
 
-    login(){
-      this.route.navigate(['login']);
+      this.loginService.register(data).subscribe(
+        response => {
+          // console.log(response);
+          this.route.navigate(['login']);
+        },
+        error => {
+          // Handle authentication error
+          console.error('Registration failed:', error);
+        }
+      );
     }
+  }
+
+  login() {
+    this.route.navigate(['login']);
+  }
 }
