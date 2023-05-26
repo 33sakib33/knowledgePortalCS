@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { FeedComponent } from './feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     HomeComponent,
     UserProfileComponent,
     BlogsComponent,
-    SidebarComponent
+    SidebarComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule,

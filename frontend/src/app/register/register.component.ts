@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     if (this.username != "" && this.password != "" && this.email != "") {
       console.log("Registering User")
       var data = {
-        fullName: "placeholder",
+        fullName: this.fullname,
         email: this.email,
         userName: this.username,
         password: this.password

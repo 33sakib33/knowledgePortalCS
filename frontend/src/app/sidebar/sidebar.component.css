@@ -8,8 +8,16 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-
-
+.fntRbt{
+    font-family: 'Roboto', sans-serif;
+    font-style: bold;
+}
+.bgcustom{
+    background-color: #AFD3E2;
+}
+.bgSideBar{
+    background-color: #F6F1F1;
+}
 html {
     font-family: sans-serif;
     line-height: 1.15;

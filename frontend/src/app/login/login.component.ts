@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   }
   email: string = "";
   password: string = "";
-
+  str = "Explore and Learn";
   ngOnInit(): void {
   }
 
@@ -47,5 +47,13 @@ export class LoginComponent implements OnInit {
   register() {
     this.route.navigate(['register'])
   }
+  // fn = async () => {
+  //   try {
+  //     let
+  //   }
+  //   catch (error) {
+  //     throw Error(error)
+  //   }
+  // }
 
 }
