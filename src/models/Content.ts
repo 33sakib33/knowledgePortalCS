@@ -70,7 +70,7 @@ export class Content extends Model {
     createdBy!: number;
 
     @BelongsTo(() => User)
-    user!: User
+    user?: User
 
     @BelongsToMany(() => User, () => UserContent)
     interactedUser?: User[];

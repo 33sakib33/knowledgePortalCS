@@ -40,25 +40,14 @@ export class HomeComponent implements OnInit {
       //this.getStories();
       //this.getFeed();
     }
-    this.getContent();
+    // this.getContent();
 
   }
 
   private getUser() {
     return localStorage.getItem('username') || "";
   }
-  getContent = () => {
-    this.contentService.getAllContent().subscribe(
-      response => {
-        console.log(response);
-        // this.route.navigate(['login']);
-      },
-      error => {
-        // Handle authentication error
-        console.error('Registration failed:', error);
-      }
-    );
-  }
+
   onChanged(event: any) {
     this.image = event.target.files[0];
     this.uploadata.append('image', this.image);

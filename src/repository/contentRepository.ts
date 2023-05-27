@@ -3,6 +3,7 @@ import { Context } from "../utils/StrategyPattern";
 import { Content } from "../models/Content";
 import { QueryTypes } from "sequelize";
 import { UserContent } from "../models/UserContent";
+import { User } from "../models/User";
 
 // import { UserRole } from "../models/UserRole";
 // import { UserSerializer } from "../serializers/userSerializer";
@@ -14,7 +15,7 @@ export interface IContentRepo {
     getContent(model: any): Promise<any>;
     deleteContent(model: any): Promise<any>
     interact(model: any): Promise<any>
-    getRecommendations(model:any):Promise<any>;
+    getRecommendations(model: any): Promise<any>;
 }
 
 export class ContentRepository implements IContentRepo {
@@ -170,13 +171,24 @@ export class ContentRepository implements IContentRepo {
             else {
 
                 let obj = model
-                let qstr = context.preprocess(obj, ["id", "createdBy", "type", "topic"], [], ["createdAt", "DESC"], null, null, null)
+                let includeobj = [
+                    {
+                        model: User,
+                        as: 'user',
+                        required: false,
+                        attributes: ['userName', 'fullName', 'rank', 'id']
+
+                    }
+                ]
+                let qstr = context.preprocess(obj, ["id", "createdBy", "type", "topic"], [], ["createdAt", "DESC"], true, null, includeobj)
+
                 console.log(qstr.where[Object.keys(qstr.where)[0]])
                 content = await Content.findAndCountAll(qstr);
             }
             return content;
         }
         catch (error) {
+            console.log(error)
             throw Error(error)
         }
     }
@@ -223,11 +235,11 @@ export class ContentRepository implements IContentRepo {
         }
 
     }
-    getRecommendations= async(model:any)=>{
-        try{
-            
+    getRecommendations = async (model: any) => {
+        try {
+
         }
-        catch(error){
+        catch (error) {
             throw Error(error);
         }
     }

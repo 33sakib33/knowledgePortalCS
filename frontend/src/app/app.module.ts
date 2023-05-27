@@ -12,6 +12,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FeedComponent } from './feed/feed.component';
+import { BlogcardsComponent } from './blogcards/blogcards.component';
+import { BlogComponent } from './blog/blog.component';
+import { RecommendedFeedComponent } from './recommended-feed/recommended-feed.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { FeedComponent } from './feed/feed.component';
     UserProfileComponent,
     BlogsComponent,
     SidebarComponent,
-    FeedComponent
+    FeedComponent,
+    BlogcardsComponent,
+    BlogComponent,
+    RecommendedFeedComponent
   ],
   imports: [
     BrowserModule,

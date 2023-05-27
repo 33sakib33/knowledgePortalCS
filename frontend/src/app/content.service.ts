@@ -19,12 +19,10 @@ export class ContentService {
   }
 
   getAllContent() {
-    return this.http.post<any>(`${this.API_URL}/get`, {
-      "content": {
-
-        "type": "blog"
-      }
-    });
+    return this.http.post<any>(`${this.API_URL}/get`, {});
+  }
+  getContent(data: any) {
+    return this.http.post<any>(`${this.API_URL}/get`,  data);
   }
 
   searchContent(data: any) {
