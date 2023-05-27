@@ -1,4 +1,6 @@
 .forum-card {
+    display: inline-block;
+    width: calc(50% - 10px); /* Adjust the width as needed */
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -15,5 +17,6 @@
   
   .card-content {
     padding: 10px;
+    background-color: #f5f5f5; /* Whitish background color */
   }
   
