@@ -3,7 +3,12 @@
       <h2>{{ title }}</h2>
     </div>
     <div class="card-content">
-      <p>{{ details }}</p>
+      <app-forum-items *ngFor="let item of items" [title]="item.title" [description]="item.description" (itemClicked)="handleItemClick()"></app-forum-items>
     </div>
   </div>
+  
+  <!-- <div class="card">
+    <h2>Card Title</h2>
+    <app-forum-items *ngFor="let item of items" [title]="item.title" [description]="item.description" (itemClicked)="handleItemClick()"></app-forum-items>
+  </div> -->
   
