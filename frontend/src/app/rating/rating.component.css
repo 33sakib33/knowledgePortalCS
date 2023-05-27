@@ -1,0 +1,28 @@
+.rating {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .star {
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .star.active {
+    color: orange;
+  }
+
+  .submit-button {
+    background-color: rgb(86, 143, 165);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    justify-content: center;
+    border-radius: 10%;
+  }
+  

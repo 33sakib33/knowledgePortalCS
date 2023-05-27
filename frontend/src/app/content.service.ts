@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class ContentService {
 
   constructor(private http: HttpClient) { }
-  API_URL = "http://localhost:3000/geekbangla/api/content"
+  API_URL = "http://10.100.103.68:3000/geekbangla/api/content"
   //API_URL = "192.168.0.101:3000/"
 
   createContent(data: any) {

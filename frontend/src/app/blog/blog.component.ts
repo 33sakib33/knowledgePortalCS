@@ -59,6 +59,13 @@ export class BlogComponent implements OnInit {
     );
 
   }
+
+  ratingReceived(rating:number) {
+    console.log('rating received', rating)
+
+
+  }
+
   makeComment = () => {
     if (this.newComment) {
       let pload = {
@@ -78,5 +85,4 @@ export class BlogComponent implements OnInit {
         }
       );
     }
-  }
 }

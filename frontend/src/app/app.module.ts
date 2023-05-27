@@ -15,6 +15,9 @@ import { FeedComponent } from './feed/feed.component';
 import { BlogcardsComponent } from './blogcards/blogcards.component';
 import { BlogComponent } from './blog/blog.component';
 import { RecommendedFeedComponent } from './recommended-feed/recommended-feed.component';
+import { RatingComponent } from './rating/rating.component';
+import { ForumComponent } from './forum/forum.component';
+import { ForumCardComponent } from './forum/forum-card/forum-card.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { RecommendedFeedComponent } from './recommended-feed/recommended-feed.co
     FeedComponent,
     BlogcardsComponent,
     BlogComponent,
-    RecommendedFeedComponent
+    RecommendedFeedComponent,
+    RatingComponent,
+    ForumComponent,
+    ForumCardComponent
   ],
   imports: [
     BrowserModule,
