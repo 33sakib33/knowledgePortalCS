@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommentService } from '../comment.service';
 import { ContentService } from '../content.service';
 
 @Component({
@@ -9,10 +10,11 @@ import { ContentService } from '../content.service';
 })
 export class BlogComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private contentService: ContentService) { }
+  constructor(private route: ActivatedRoute, private contentService: ContentService, private commentService: CommentService) { }
   id: number = 0;
   blog: any = {};
-
+  comments: any;
+  newComment: string = "";
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       console.log(params)
@@ -27,6 +29,11 @@ export class BlogComponent implements OnInit {
         id: this.id
       }
     }
+    let data2 = {
+      comment: {
+        contentId: this.id
+      }
+    }
 
     this.contentService.getContent(data).subscribe(
       response => {
@@ -39,6 +46,37 @@ export class BlogComponent implements OnInit {
         console.error('Registration failed:', error);
       }
     );
+    this.commentService.getAllComment(data2).subscribe(
+      response => {
+        this.comments = response.rows;
+        console.log(this.comments)
+        // this.route.navigate(['login']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
 
+  }
+  makeComment = () => {
+    if (this.newComment) {
+      let pload = {
+        comment: {
+          text: this.newComment,
+          contentId: this.id
+        }
+      }
+      this.commentService.createComment(pload).subscribe(
+        response => {
+          // Assuming authentication is successful, store the token and user details in localStorage
+
+        },
+        error => {
+          // Handle authentication error
+          console.error('Login failed:', error);
+        }
+      );
+    }
   }
 }
