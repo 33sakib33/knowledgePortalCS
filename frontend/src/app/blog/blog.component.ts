@@ -60,7 +60,7 @@ export class BlogComponent implements OnInit {
 
   }
 
-  ratingReceived(rating:number) {
+  ratingReceived(rating: number) {
     console.log('rating received', rating)
 
 
@@ -85,4 +85,5 @@ export class BlogComponent implements OnInit {
         }
       );
     }
+  }
 }
