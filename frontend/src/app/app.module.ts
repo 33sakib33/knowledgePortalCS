@@ -18,6 +18,7 @@ import { RecommendedFeedComponent } from './recommended-feed/recommended-feed.co
 import { RatingComponent } from './rating/rating.component';
 import { ForumComponent } from './forum/forum.component';
 import { ForumCardComponent } from './forum/forum-card/forum-card.component';
+import { ForumItemsComponent } from './forum/forum-card/forum-items/forum-items.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ForumCardComponent } from './forum/forum-card/forum-card.component';
     RecommendedFeedComponent,
     RatingComponent,
     ForumComponent,
-    ForumCardComponent
+    ForumCardComponent,
+    ForumItemsComponent
   ],
   imports: [
     BrowserModule,
