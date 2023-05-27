@@ -3,6 +3,7 @@ import { Context } from "../utils/StrategyPattern";
 import { Comment } from "../models/Comment";
 import { QueryTypes } from "sequelize";
 import { UserComment } from "../models/UserComment";
+import { User } from "../models/User";
 
 export interface ICommentRepo {
     createComment(comment: any): Promise<Comment | any>;
@@ -18,14 +19,17 @@ export class CommentRepository implements ICommentRepo {
         try {
             // comment["parentCommentId"]= 1;
             let comment = model.comment
+
             txn = await sequelize.transaction();
             console.log("hello")
+            console.log(model)
             let commentObj = new Comment({
                 // parentCommentId: comment.parentCommentId,
                 title: comment.title,
                 text: comment.text,
-                createdBy: comment.userid,
-                contentId: comment.contentId
+                createdBy: model.userId,
+                contentId: comment.contentId,
+                // createdBy: model.userId
             });
             console.log("hello")
 
@@ -132,6 +136,14 @@ export class CommentRepository implements ICommentRepo {
 
                 comments = result;
             } else {
+                let includeObj = [
+                    {
+                        model: User,
+                        required: false,
+
+
+                    }
+                ]
                 let obj = model;
                 let qstr = context.preprocess(
                     obj,
@@ -140,7 +152,7 @@ export class CommentRepository implements ICommentRepo {
                     ["createdAt", "DESC"],
                     null,
                     null,
-                    null
+                    includeObj
                 );
                 console.log(qstr.where[Object.keys(qstr.where)[0]]);
                 comments = await Comment.findAndCountAll(qstr);
