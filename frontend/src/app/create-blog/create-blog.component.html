@@ -1,0 +1,17 @@
+<div class="create-post">
+    <textarea class="post-text" placeholder="What's on your mind?"></textarea>
+    <div class="post-options">
+      <label for="image-upload" class="option-label">
+        <input type="file" id="image-upload" accept="image/*" (change)="handleImageUpload($event)" hidden>
+        <button type="button" class="option-button">
+          <span class="option-icon"><i class="fa fa-image"></i></span>
+          Add Image
+        </button>
+      </label>
+      <button type="button" class="submit-button">
+        <span class="submit-icon"><i class="fa fa-check"></i></span>
+        Submit
+      </button>
+    </div>
+  </div>
+  

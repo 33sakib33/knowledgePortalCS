@@ -19,6 +19,7 @@ import { RatingComponent } from './rating/rating.component';
 import { ForumComponent } from './forum/forum.component';
 import { ForumCardComponent } from './forum/forum-card/forum-card.component';
 import { ForumItemsComponent } from './forum/forum-card/forum-items/forum-items.component';
+import { CreateBlogComponent } from './create-blog/create-blog.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ForumItemsComponent } from './forum/forum-card/forum-items/forum-items.
     RatingComponent,
     ForumComponent,
     ForumCardComponent,
-    ForumItemsComponent
+    ForumItemsComponent,
+    CreateBlogComponent
   ],
   imports: [
     BrowserModule,

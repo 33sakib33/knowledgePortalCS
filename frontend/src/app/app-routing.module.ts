@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ForumComponent } from './forum/forum.component';
+import { CreateBlogComponent } from './create-blog/create-blog.component';
 
 const routes: Routes = [
   { path: '', component: FeedComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'profile', component: UserProfileComponent },
   { path: 'sidebar', component: SidebarComponent },
   { path: 'blog/:id', component: BlogComponent },
-  { path: 'forums', component: ForumComponent }
+  { path: 'forums', component: ForumComponent },
+  { path: 'createBlog', component: CreateBlogComponent }
 ];
 
 @NgModule({
