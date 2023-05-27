@@ -1,0 +1,15 @@
+<div style="display: flex; flex-direction: column; justify-content: center;
+align-items: center;">
+    <div class="rating">
+        <div>Rate the {{type}}:</div>
+        <span class="star" *ngFor="let star of stars; let i = index" 
+          [class.active]="i < currentRating" 
+          (mouseover)="highlightStars(i + 1)" 
+          (click)="updateRating(i + 1)">
+          &#9733;
+        </span>
+    </div>
+    <button class="submit-button" (click)="clicked()">Submit</button>
+</div>
+
+  

@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ForumComponent } from './forum/forum.component';
 
 const routes: Routes = [
   { path: '', component: FeedComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'sidebar', component: SidebarComponent },
-  { path: 'blog/:id', component: BlogComponent }
+  { path: 'blog/:id', component: BlogComponent },
+  { path: 'forums', component: ForumComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,19 @@
+.forum-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .card-header {
+    padding: 10px;
+    color: white;
+  }
+  
+  .card-header h2 {
+    margin: 0;
+  }
+  
+  .card-content {
+    padding: 10px;
+  }
+  

@@ -41,4 +41,8 @@ export class BlogComponent implements OnInit {
     );
 
   }
+
+  ratingReceived(rating:number) {
+    console.log('rating received', rating)
+  }
 }
