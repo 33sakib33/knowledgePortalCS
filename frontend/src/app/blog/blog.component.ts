@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommentService } from '../comment.service';
 import { ContentService } from '../content.service';
 
@@ -10,16 +10,18 @@ import { ContentService } from '../content.service';
 })
 export class BlogComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private contentService: ContentService, private commentService: CommentService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private contentService: ContentService, private commentService: CommentService) { }
   id: number = 0;
   blog: any = {};
   comments: any;
   newComment: string = "";
+  userId: any = -1;
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       console.log(params)
       this.id = params['id'];
     });
+    this.userId = localStorage.getItem("userId")
     this.getContent()
   }
   getContent = () => {
@@ -77,7 +79,9 @@ export class BlogComponent implements OnInit {
       this.commentService.createComment(pload).subscribe(
         response => {
           // Assuming authentication is successful, store the token and user details in localStorage
-
+          // alert("comment posted")
+          this.newComment = ""
+          this.getContent()
         },
         error => {
           // Handle authentication error
@@ -86,6 +90,7 @@ export class BlogComponent implements OnInit {
       );
     }
   }
+
   addToFav() {
     let data = {
       contentId: this.id
@@ -94,6 +99,7 @@ export class BlogComponent implements OnInit {
       response => {
 
         console.log(response)
+        alert("added to favorites")
         // this.route.navigate(['login']);
       },
       error => {
@@ -101,5 +107,25 @@ export class BlogComponent implements OnInit {
         console.error('Registration failed:', error);
       }
     );
+  }
+  deleteContent() {
+    let data = {
+      content: {
+        id: this.blog.id
+      }
+    }
+    this.contentService.delete(data).subscribe(
+      response => {
+
+
+        alert("Deleted")
+        this.router.navigate(['']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
+
   }
 }

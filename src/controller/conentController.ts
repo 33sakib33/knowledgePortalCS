@@ -22,10 +22,12 @@ export class ContentController {
 
             await this._contentRepository.createContent(contentObject);
 
-            return res.status(201).send("Creation Done");
+            return res.status(201).json({
+                "status": "created"
+            });
         } catch (error) {
 
-            return res.status(404).send("failed");
+            return res.status(404).JSON("failed");
         }
     };
 
@@ -35,7 +37,9 @@ export class ContentController {
             let ContentObject = req.body;
             console.log("content")
             await this._contentRepository.updateContent(ContentObject);
-            return res.status(201).send("update Done");
+            return res.status(200).json({
+                "status": "updated"
+            });
 
         } catch (error) {
             return res.status(404).send("failed");
@@ -58,7 +62,9 @@ export class ContentController {
         try {
             let model = req.body.content;
             await this._contentRepository.deleteContent(model);
-            res.status(200).send("deleted");
+            res.status(200).json({
+                "status": "successful"
+            });
         }
         catch (error) {
             res.status(401).send(error)
@@ -89,7 +95,22 @@ export class ContentController {
             let model = req.body;
             console.log(model);
             let status = await this._contentRepository.addFav(model);
-            res.status(200).send(status)
+            res.status(200).json({
+                "status": status
+            })
+        }
+        catch (error) {
+            res.status(401).send(error)
+        }
+    }
+    deleteFav = async (req, res) => {
+        try {
+            let model = req.body;
+            console.log(model);
+            let status = await this._contentRepository.deleteFav(model);
+            res.status(200).json({
+                "status": status
+            })
         }
         catch (error) {
             res.status(401).send(error)

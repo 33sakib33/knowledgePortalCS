@@ -23,7 +23,12 @@ export class FeedComponent implements OnInit {
     this.getContent();
   }
   getContent = () => {
-    this.contentService.getAllContent().subscribe(
+    let data = {
+      content: {
+        type: "blog"
+      }
+    }
+    this.contentService.getAllContent(data).subscribe(
       response => {
         this.blogs = response.rows;
         console.log(this.blogs)
@@ -49,7 +54,10 @@ export class FeedComponent implements OnInit {
         this.blogs = response.rows;
         console.log(this.blogs)
         console.log(this.blogs)
-        this.headTitle = "Search result for" + " " + this.searchParam;
+        if (this.searchParam)
+          this.headTitle = "Search result for" + " " + this.searchParam;
+        else this.headTitle = "Latest"
+
         // this.route.navigate(['login']);
       },
       error => {

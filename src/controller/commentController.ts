@@ -17,7 +17,9 @@ export class CommentController {
             const commentObject = req.body;
             console.log("hello")
             await this._commentRepository.createComment(commentObject);
-            return res.status(201).send("Comment created");
+            return res.status(201).json({
+                "status": "created"
+            });
         } catch (error) {
             return res.status(404).send("Failed to create comment");
         }
@@ -27,7 +29,9 @@ export class CommentController {
         try {
             const commentObject = req.body;
             await this._commentRepository.updateComment(commentObject);
-            return res.status(200).send("Comment updated");
+            return res.status(200).json({
+                "status": "updated"
+            });
         } catch (error) {
             return res.status(404).send("Failed to update comment");
         }
@@ -45,7 +49,7 @@ export class CommentController {
 
     deleteComment = async (req, res) => {
         try {
-            const model = req.body.comment;
+            const model = req.body;
             await this._commentRepository.deleteComment(model);
             res.status(200).send("Comment deleted");
         } catch (error) {

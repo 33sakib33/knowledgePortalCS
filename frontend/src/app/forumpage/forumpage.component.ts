@@ -16,6 +16,7 @@ export class ForumpageComponent implements OnInit {
   comments: any = {}
   newComment: string = "";
   userName: string | any = "";
+
   ngOnInit(): void {
     this.route.params.subscribe((params: { [x: string]: number; }) => {
       console.log(params)
@@ -34,7 +35,7 @@ export class ForumpageComponent implements OnInit {
     this.contentService.getContentByTopic(data).subscribe(
       response => {
         this.blog = response.rows[0];
-
+        this.blog.createdAt = this.dateStringReturn(this.blog.createdAt)
         // this.route.navigate(['login']);
       },
       error => {
@@ -50,7 +51,9 @@ export class ForumpageComponent implements OnInit {
     this.commentService.getAllComment(data2).subscribe(
       response => {
         this.comments = response.rows;
-        console.log(this.comments)
+        for (let i = 0; i < this.comments.length; i++) {
+          this.comments[i].createdAt = this.dateStringReturn(this.comments[i].createdAt)
+        }
         // this.route.navigate(['login']);
       },
       error => {
@@ -72,7 +75,7 @@ export class ForumpageComponent implements OnInit {
       this.commentService.createComment(pload).subscribe(
         response => {
           // Assuming authentication is successful, store the token and user details in localStorage
-
+          this.getContent();
         },
         error => {
           // Handle authentication error
@@ -80,6 +83,17 @@ export class ForumpageComponent implements OnInit {
         }
       );
     }
+  }
+  dateStringReturn(timestamp: any) {
+
+    const date = new Date(timestamp);
+    const dateString = date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    return dateString;
   }
 
 }

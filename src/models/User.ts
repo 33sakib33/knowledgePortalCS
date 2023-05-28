@@ -15,6 +15,8 @@ import bcrypt from "bcryptjs";
 import { Content } from "./Content";
 import { UserContent } from "./UserContent";
 import { UserFavorites } from "./UserFavorites";
+import { Category } from "./Category";
+import { UserCategory } from "./UserCategory";
 
 // import { Role } from "./Role";
 
@@ -68,6 +70,9 @@ export class User extends Model {
 
   @BelongsToMany(() => Content, () => UserFavorites)
   favvoriteContents?: Content[];
+
+  @BelongsToMany(() => Category, () => UserCategory)
+  categoryScore?: Category[];
 
 
 

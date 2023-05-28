@@ -1,3 +1,4 @@
+import { DataTypes } from "sequelize";
 import {
     Model,
     Column,
@@ -12,6 +13,7 @@ import {
     BelongsToMany,
     // ForeignKey,
 } from "sequelize-typescript";
+import { Category } from "./Category";
 import { User } from "./User";
 import { UserContent } from "./UserContent";
 import { UserFavorites } from "./UserFavorites";
@@ -39,8 +41,8 @@ export class Content extends Model {
     topic!: string;
 
     @AllowNull(true)
-    @Column
-    contentText!: string;
+    @Column(DataTypes.TEXT)
+    contentText!: any;
 
     @AllowNull(true)
     @Column
@@ -74,12 +76,20 @@ export class Content extends Model {
     @Column
     createdBy!: number;
 
+    @ForeignKey(() => Category)
+    @AllowNull
+    @Column
+    categoryId!: number;
+
+    @BelongsTo(() => Category)
+    category?: Category
+
     @BelongsTo(() => User)
     user?: User
 
     @BelongsToMany(() => User, () => UserContent)
     interactedUser?: User[];
-    
+
     @BelongsToMany(() => User, () => UserFavorites)
     favoredUsers?: User[];
 

@@ -8,7 +8,7 @@
           <span class="font-semibold">{{blog.user.userName}}</span>
         </div>
         <p class="text-gray-600 mb-2">{{blog.contentText}}</p>
-        <span class="text-gray-400 text-sm">Posted on 2023-05-27</span>
+        <span class="text-gray-400 text-sm">Posted on {{blog.createdAt}}</span>
       </div>
   
       <div *ngFor="let comment of comments" ngclass="bg-grey rounded shadow-md p-4 mb-4 py-12">
@@ -18,8 +18,8 @@
           <span class="font-semibold pt-5">{{comment.user.userName}}</span>
         </div>
         <p class="text-gray-600 mb-2">{{comment.text}}</p>
-        <span class="text-gray-400 text-sm">Posted on 2023-05-28</span>
-        </div>
+        <span class="text-gray-400 text-sm">Posted on {{comment.createdAt}}</span>
+      </div>
       </div>
   
       <!-- Add more discussion replies here -->

@@ -38,6 +38,7 @@ export class CreateQuestionComponent implements OnInit {
       response => {
         console.log(response)
         // Assuming authentication is successful, store the token and user details in localStorage
+        alert("question posted")
         this.router.navigate(['forums'])
       },
       error => {

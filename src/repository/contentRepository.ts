@@ -5,6 +5,9 @@ import { QueryTypes } from "sequelize";
 import { UserContent } from "../models/UserContent";
 import { User } from "../models/User";
 import { UserFavorites } from "../models/UserFavorites";
+import { UserComment } from "../models/UserComment";
+import { Comment } from "../models/Comment";
+import { Category } from "../models/Category";
 
 // import { UserRole } from "../models/UserRole";
 // import { UserSerializer } from "../serializers/userSerializer";
@@ -18,6 +21,7 @@ export interface IContentRepo {
     interact(model: any): Promise<any>
     getRecommendations(model: any): Promise<any>
     addFav(model: any): Promise<any>;
+    deleteFav(model: any): Promise<any>
 }
 
 export class ContentRepository implements IContentRepo {
@@ -50,113 +54,38 @@ export class ContentRepository implements IContentRepo {
 
             let content = model.content;
             txn = await sequelize.transaction();
-            let oldContent = await Content.findOne({
-                where: {
-                    id: content.id
-                }
+            // let oldContent = await Content.findOne({
+            //     where: {
+            //         id: content.id
+            //     }
+            // })
+            let interaction = new UserContent({
+                userId: model.userId,
+                contentId: content.id,
+                interactionType: "rating",
+                rating: content.rating
             })
-            console.log(content)
-            if (oldContent) {
-                let interaction;
-                //     if (oldContent?.rating < content.rating) {
-                //         let check = await UserContent.findOne({
-                //             where: {
-                //                 userId: model.userId,
-                //                 contentId: content.id,
-                //                 interactionType: "like"
-                //             }
-                //         })
-                //         if (check) return;
-                //         interaction = new UserContent({
-                //             userId: model.userId,
-                //             contentId: content.id,
-                //             interactionType: "like"
-                //         })
-                //         await interaction.save({ transacation: txn })
-                //     }
-                //     else if (oldContent?.shares < content.shares) {
-                //         let check = await UserContent.findOne({
-                //             where: {
-                //                 userId: model.userId,
-                //                 contentId: content.id,
-                //                 interactionType: "share"
-                //             }
-                //         })
-                //         if (check) return;
-                //         interaction = new UserContent({
-                //             userId: model.userId,
-                //             contentId: content.id,
-                //             interactionType: "share"
-                //         })
-                //         await interaction.save({ transacation: txn })
-                //     }
-                //     if (oldContent?.likes > content.likes) {
-                //         await UserContent.destroy({
-                //             where: {
-                //                 userId: model.userId,
-                //                 contentId: content.id,
-                //                 interactionType: "like"
-                //             },
-                //             transaction: txn
-                //         })
-                //     }
-
-                // }
-                await UserContent.destroy({
+            await interaction.save({ transaction: txn })
+            await Content.update(
+                {
+                    title: content.title,
+                    contentText: content.contentText,
+                    topic: content.topic,
+                    type: content.type,
+                    rating: content.rating,
+                    shares: content.shares,
+                    approve: content.approve
+                },
+                {
                     where: {
-                        userId: model.userId,
-                        contentId: content.id
-                    },
-                    transaction: txn
-                })
-                let ratingArr = await UserContent.findAll({
-                    where: {
-                        contentId: content.id
-                    },
-                    attributes: ['rating']
-                })
-                let sum = 0;
-                for (let i in ratingArr) {
-                    sum += ratingArr[i].rating;
-                }
-                console.log(sum)
-                let newRating = sum;
-                newRating += content.rating;
-                newRating /= (ratingArr.length + 1)
-                interaction = new UserContent({
-                    userId: model.userId,
-                    contentId: content.id,
-                    interactionType: "rating",
-                    rating: content.rating
-                })
-                await interaction.save({ transacation: txn })
-                console.log(interaction)
-
-                console.log("hello")
-                await Content.update(
-                    {
-                        title: content.title,
-                        contentText: content.contentText,
-                        topic: content.topic,
-                        type: content.type,
-                        rating: newRating,
-                        shares: content.shares,
-                        approve: content.approve
-                    },
-                    {
-                        where: {
-                            id: content.id
-                        }
-                    },
+                        id: content.id
+                    }
+                },
 
 
-                )
-
-
-
-                await txn.commit();
-                return true;
-            }
+            )
+            await txn.commit();
+            return true;
         }
         catch (error) {
             if (txn) await txn.rollback();
@@ -216,6 +145,13 @@ export class ContentRepository implements IContentRepo {
                         required: false,
                         attributes: ['userName', 'fullName', 'rank', 'id']
 
+                    },
+                    {
+                        model: Category,
+                        as: 'category',
+                        required: false,
+
+
                     }
                 ]
                 let qstr = context.preprocess(obj, ["id", "createdBy", "type", "topic"], [], ["createdAt", "DESC"], true, null, includeobj)
@@ -247,7 +183,45 @@ export class ContentRepository implements IContentRepo {
     deleteContent = async (model: any) => {
         let txn;
         try {
+            console.log(model)
             txn = await sequelize.transaction();
+            await UserContent.destroy({
+                where: {
+                    contentId: model.id
+                },
+                transaction: txn
+            })
+            await UserFavorites.destroy({
+                where: {
+                    contentId: model.id
+                },
+                transaction: txn
+            })
+            let comments = await Comment.findAll({
+                where: {
+                    contentId: model.id
+                }
+            })
+            for (let i = 0; i < comments.length; i++) {
+                await UserComment.destroy({
+                    where: {
+                        commentId: comments[i].id
+                    },
+                    transaction: txn
+                })
+                await Comment.destroy({
+                    where: {
+                        id: comments[i].id
+                    },
+                    transaction: txn
+                })
+            }
+            await Content.destroy({
+                where: {
+                    id: model.id
+                },
+                transaction: txn
+            })
             await Content.destroy({
                 where: {
                     id: model.id
@@ -292,6 +266,27 @@ export class ContentRepository implements IContentRepo {
             })
             console.log(userFav)
             await userFav.save({ transaction: txn })
+            await txn.commit();
+
+        }
+        catch (error) {
+            if (!txn) await txn.rollback();
+            console.log(error);
+            throw Error(error)
+        }
+    }
+    deleteFav = async (model: any) => {
+        let txn;
+        try {
+
+            txn = await sequelize.transaction();
+            await UserFavorites.destroy({
+                where: {
+                    userId: model.userId,
+                    contentId: model.contentId
+                },
+                transaction: txn
+            })
             await txn.commit();
 
         }

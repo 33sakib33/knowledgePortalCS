@@ -31,8 +31,9 @@ export class CreateBlogComponent implements OnInit {
     }
     this.contentService.createContent(data).subscribe(
       response => {
-        console.log(response)
         // Assuming authentication is successful, store the token and user details in localStorage
+        alert("posted")
+        console.log("posted")
         this.router.navigate([''])
       },
       error => {

@@ -1,16 +1,17 @@
+import { DataTypes } from "sequelize";
 import {
-    Model,
-    Column,
-    Table,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
-    AllowNull,
-    ForeignKey,
-    BelongsTo,
-    BeforeCreate,
-    HasMany,
-    // ForeignKey,
+  Model,
+  Column,
+  Table,
+  CreatedAt,
+  UpdatedAt,
+  DeletedAt,
+  AllowNull,
+  ForeignKey,
+  BelongsTo,
+  BeforeCreate,
+  HasMany,
+  // ForeignKey,
 } from "sequelize-typescript";
 import { Content } from "./Content";
 import { User } from "./User";
@@ -21,65 +22,65 @@ import { User } from "./User";
 export class Comment extends Model {
 
 
-    @ForeignKey(()=>Comment)
-    @AllowNull(true)
-    @Column
-    parentCommentId!: number
+  @ForeignKey(() => Comment)
+  @AllowNull(true)
+  @Column
+  parentCommentId!: number
 
-    @ForeignKey(()=>Content)
-    @AllowNull(true)
-    @Column
-    contentId!: number
-    
-    @BelongsTo(() => Comment,{as:"parentComment"})
-    parentElement!: Comment
+  @ForeignKey(() => Content)
+  @AllowNull(true)
+  @Column
+  contentId!: number
 
-    @HasMany(() => Comment,{as:"replies"})
-    childs!: Comment[]
+  @BelongsTo(() => Comment, { as: "parentComment" })
+  parentElement!: Comment
 
-    @BelongsTo(() => Content)
-    content!: Content
+  @HasMany(() => Comment, { as: "replies" })
+  childs!: Comment[]
 
-    @AllowNull(true)
-    @Column
-    title!: string;
+  @BelongsTo(() => Content)
+  content!: Content
 
-
-    @AllowNull(true)
-    @Column
-    text!: string;
-
-    @AllowNull(true)
-    @Column
-    likes!:number;
+  @AllowNull(true)
+  @Column
+  title!: string;
 
 
-    @CreatedAt
-    @Column
-    createdAt!: Date;
+  @AllowNull(true)
+  @Column(DataTypes.TEXT)
+  text!: any;
+
+  @AllowNull(true)
+  @Column
+  likes!: number;
 
 
-    @UpdatedAt
-    @Column
-    updatedAt!: Date;
+  @CreatedAt
+  @Column
+  createdAt!: Date;
 
-    @DeletedAt
-    @Column
-    deletedAt!: Date;
 
-    @ForeignKey(() => User)
-    @AllowNull
-    @Column
-    createdBy!: number;
+  @UpdatedAt
+  @Column
+  updatedAt!: Date;
 
-    @BelongsTo(() => User)
-    user!: User
+  @DeletedAt
+  @Column
+  deletedAt!: Date;
 
-    @BeforeCreate
-    static rankDefautl(instance: Comment) {
-      instance.likes = 0;
-    }
-  
+  @ForeignKey(() => User)
+  @AllowNull
+  @Column
+  createdBy!: number;
+
+  @BelongsTo(() => User)
+  user!: User
+
+  @BeforeCreate
+  static rankDefautl(instance: Comment) {
+    instance.likes = 0;
+  }
+
 }
 
 

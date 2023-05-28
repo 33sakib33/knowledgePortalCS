@@ -182,9 +182,15 @@ export class CommentRepository implements ICommentRepo {
         let txn;
         try {
             txn = await sequelize.transaction();
+            await UserComment.destroy({
+                where: {
+                    commentId: model.comment.id
+                },
+                transaction: txn
+            })
             await Comment.destroy({
                 where: {
-                    id: model.id
+                    id: model.comment.id
                 },
                 transaction: txn
             });

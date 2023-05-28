@@ -6,8 +6,11 @@ import {
     UpdatedAt,
     DeletedAt,
     AllowNull,
+    BelongsToMany,
     // ForeignKey,
 } from "sequelize-typescript";
+import { User } from "./User";
+import { UserCategory } from "./UserCategory";
 
 
 // import { Role } from "./Role";
@@ -22,7 +25,7 @@ export class Category extends Model {
 
     @AllowNull(true)
     @Column
-    topic!: number;
+    topic!: String;
 
     @CreatedAt
     @Column
@@ -35,6 +38,10 @@ export class Category extends Model {
     @DeletedAt
     @Column
     deletedAt!: Date;
+
+    @BelongsToMany(() => User, () => UserCategory)
+    userScore?: User[];
+
 
 
 }

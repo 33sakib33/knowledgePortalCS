@@ -21,8 +21,8 @@ export class ContentService {
     return this.http.post<any>(`${this.API_URL}/update`, data);
   }
 
-  getAllContent() {
-    return this.http.post<any>(`${this.API_URL}/get`, {});
+  getAllContent(data: any) {
+    return this.http.post<any>(`${this.API_URL}/get`, data);
   }
   getContent(data: any) {
     return this.http.post<any>(`${this.API_URL}/get`, data);
@@ -40,6 +40,11 @@ export class ContentService {
     const header = new HttpHeaders().set('Authorization', token);
     return this.http.post<any>(`${this.API_URL}/addFav`, data, { headers: header });
 
+  }
+  delete(data: any) {
+    let token: any = localStorage.getItem('token')
+    const header = new HttpHeaders().set('Authorization', token);
+    return this.http.post<any>(`${this.API_URL}/delete`, data, { headers: header });
   }
 
 }
