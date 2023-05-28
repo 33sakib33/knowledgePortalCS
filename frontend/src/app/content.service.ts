@@ -35,5 +35,11 @@ export class ContentService {
     return this.http.post<any>(`${this.API_URL}/get`, data);
 
   }
+  addFav(data: any) {
+    let token: any = localStorage.getItem('token')
+    const header = new HttpHeaders().set('Authorization', token);
+    return this.http.post<any>(`${this.API_URL}/addFav`, data, { headers: header });
+
+  }
 
 }

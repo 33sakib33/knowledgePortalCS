@@ -87,6 +87,19 @@ export class BlogComponent implements OnInit {
     }
   }
   addToFav() {
+    let data = {
+      contentId: this.id
+    }
+    this.contentService.addFav(data).subscribe(
+      response => {
 
+        console.log(response)
+        // this.route.navigate(['login']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
   }
 }
