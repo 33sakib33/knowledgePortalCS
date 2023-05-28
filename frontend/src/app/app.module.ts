@@ -20,6 +20,7 @@ import { ForumComponent } from './forum/forum.component';
 import { ForumCardComponent } from './forum/forum-card/forum-card.component';
 import { ForumItemsComponent } from './forum/forum-card/forum-items/forum-items.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
+import { ForumpageComponent } from './forumpage/forumpage.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CreateBlogComponent } from './create-blog/create-blog.component';
     ForumComponent,
     ForumCardComponent,
     ForumItemsComponent,
-    CreateBlogComponent
+    CreateBlogComponent,
+    ForumpageComponent
   ],
   imports: [
     BrowserModule,

@@ -24,6 +24,10 @@ export class Content extends Model {
     @AllowNull(true)
     @Column
     title!: string;
+    
+    @AllowNull(true)
+    @Column
+    ratingCount!: number;
 
     @AllowNull(true)
     @Column
@@ -39,7 +43,7 @@ export class Content extends Model {
 
     @AllowNull(true)
     @Column
-    likes!: number;
+    rating!: number;
 
     @AllowNull(true)
     @Column
@@ -79,8 +83,9 @@ export class Content extends Model {
     @BeforeCreate
     static rankDefautl(instance: Content) {
         instance.approve = false;
-        instance.likes = 0;
+        instance.rating = 0;
         instance.shares = 0;
+        instance.ratingCount = 0;
     }
 
 

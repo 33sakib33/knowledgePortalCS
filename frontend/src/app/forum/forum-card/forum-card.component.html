@@ -1,9 +1,9 @@
 <div class="forum-card">
     <div class="card-header" [style.background]="headerColor">
-      <h2>{{ title }}</h2>
+      <h2 class="font-mono font-semibold text-gray-900">{{ title }}</h2>
     </div>
     <div class="card-content">
-      <app-forum-items *ngFor="let item of items" [title]="item.title" [description]="item.description" (itemClicked)="handleItemClick()"></app-forum-items>
+      <app-forum-items *ngFor="let item of items" [title]="item.title" [id]="item.id" [description]="item.contentText" (itemClicked)="handleItemClick()"></app-forum-items>
     </div>
   </div>
   

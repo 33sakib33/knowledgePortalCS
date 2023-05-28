@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ContentService } from 'src/app/content.service';
 
 @Component({
   selector: 'app-forum-card',
@@ -9,9 +10,10 @@ export class ForumCardComponent implements OnInit {
   @Input() title: string = '';
   @Input() details: string = '';
   @Input() headerColor: string = '';
-  constructor() { }
-  
+  constructor(private contentService: ContentService) { }
+
   ngOnInit(): void {
+    this.getContentByTopic();
   }
 
   items: any[] = [
@@ -23,6 +25,28 @@ export class ForumCardComponent implements OnInit {
 
   handleItemClick() {
     // Handle the item click event here
+  }
+  getContentByTopic() {
+    let data = {
+      content: {
+        topic: this.title,
+        type: "forum"
+      }
+
+    }
+    this.contentService.getContentByTopic(data).subscribe(
+      response => {
+        this.items = response.rows;
+
+        // this.route.navigate(['login']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
+
+
   }
 
 }

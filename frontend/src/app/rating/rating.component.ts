@@ -10,7 +10,7 @@ export class RatingComponent implements OnInit {
   
   @Input('type') type: string = '';
   @Output('ratingEmitter') ratingEmitter: EventEmitter<number> = new EventEmitter<number>();
-
+  @Input() blog:any;
   ngOnInit(): void {
   }
   stars: number[] = [1, 2, 3, 4, 5];

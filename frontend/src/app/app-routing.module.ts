@@ -10,6 +10,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ForumComponent } from './forum/forum.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
+import { ForumpageComponent } from './forumpage/forumpage.component';
 
 const routes: Routes = [
   { path: '', component: FeedComponent },
@@ -19,7 +20,10 @@ const routes: Routes = [
   { path: 'sidebar', component: SidebarComponent },
   { path: 'blog/:id', component: BlogComponent },
   { path: 'forums', component: ForumComponent },
-  { path: 'createBlog', component: CreateBlogComponent }
+  { path: 'createBlog', component: CreateBlogComponent },
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'forumpage/:id', component: ForumpageComponent },
+
 ];
 
 @NgModule({

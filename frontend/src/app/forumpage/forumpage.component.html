@@ -1,0 +1,38 @@
+<div class="container mx-auto py-8">
+    <div class="max-w-2xl mx-auto">
+      <h1 class="text-3xl font-bold mb-4">{{blog.title}}</h1>
+  
+      <div class="bg-white rounded shadow-md p-4 mb-4">
+        <div class="flex items-center mb-2">
+          <!-- <img src="user-avatar.jpg" alt="User Avatar" class="w-8 h-8 rounded-full mr-2"> -->
+          <span class="font-semibold">{{blog.user.userName}}</span>
+        </div>
+        <p class="text-gray-600 mb-2">{{blog.contentText}}</p>
+        <span class="text-gray-400 text-sm">Posted on 2023-05-27</span>
+      </div>
+  
+      <div *ngFor="let comment of comments" ngclass="bg-grey rounded shadow-md p-4 mb-4 py-12">
+        <div class="bg-grey-600 py-1">
+        <div class="flex items-center mb-2 bg">
+          <!-- <img src="user-avatar.jpg" alt="User Avatar" class="w-8 h-8 rounded-full mr-2"> -->
+          <span class="font-semibold pt-5">{{comment.user.userName}}</span>
+        </div>
+        <p class="text-gray-600 mb-2">{{comment.text}}</p>
+        <span class="text-gray-400 text-sm">Posted on 2023-05-28</span>
+        </div>
+      </div>
+  
+      <!-- Add more discussion replies here -->
+  
+      <form class="bg-white rounded shadow-md p-4">
+        <h2 class="text-lg font-semibold mb-4">Reply to Discussion</h2>
+        <div class="flex items-center mb-4">
+          <!-- <img src="user-avatar.jpg" alt="User Avatar" class="w-8 h-8 rounded-full mr-2"> -->
+          <!-- <span class="font-semibold">{{userName}}</span> -->
+        </div>
+        <textarea  [(ngModel)]="newComment" [ngModelOptions]="{standalone:true}"  class="w-full p-2 border border-gray-300 rounded mb-2" rows="4" placeholder="Enter your reply"></textarea>
+        <button (click)="makeComment()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">Post Reply</button>
+      </form>
+    </div>
+  </div>
+  

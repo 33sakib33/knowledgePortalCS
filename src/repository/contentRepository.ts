@@ -53,76 +53,112 @@ export class ContentRepository implements IContentRepo {
                     id: content.id
                 }
             })
-            console.log("hello")
+            console.log(content)
             if (oldContent) {
                 let interaction;
-                if (oldContent?.likes < content.likes) {
-                    let check = await UserContent.findOne({
-                        where: {
-                            userId: model.userId,
-                            contentId: content.id,
-                            interactionType: "like"
-                        }
-                    })
-                    if (check) return;
-                    interaction = new UserContent({
-                        userId: model.userId,
-                        contentId: content.id,
-                        interactionType: "like"
-                    })
-                    await interaction.save({ transacation: txn })
-                }
-                else if (oldContent?.shares < content.shares) {
-                    let check = await UserContent.findOne({
-                        where: {
-                            userId: model.userId,
-                            contentId: content.id,
-                            interactionType: "share"
-                        }
-                    })
-                    if (check) return;
-                    interaction = new UserContent({
-                        userId: model.userId,
-                        contentId: content.id,
-                        interactionType: "share"
-                    })
-                    await interaction.save({ transacation: txn })
-                }
-                if (oldContent?.likes > content.likes) {
-                    await UserContent.destroy({
-                        where: {
-                            userId: model.userId,
-                            contentId: content.id,
-                            interactionType: "like"
-                        },
-                        transaction: txn
-                    })
-                }
+                //     if (oldContent?.rating < content.rating) {
+                //         let check = await UserContent.findOne({
+                //             where: {
+                //                 userId: model.userId,
+                //                 contentId: content.id,
+                //                 interactionType: "like"
+                //             }
+                //         })
+                //         if (check) return;
+                //         interaction = new UserContent({
+                //             userId: model.userId,
+                //             contentId: content.id,
+                //             interactionType: "like"
+                //         })
+                //         await interaction.save({ transacation: txn })
+                //     }
+                //     else if (oldContent?.shares < content.shares) {
+                //         let check = await UserContent.findOne({
+                //             where: {
+                //                 userId: model.userId,
+                //                 contentId: content.id,
+                //                 interactionType: "share"
+                //             }
+                //         })
+                //         if (check) return;
+                //         interaction = new UserContent({
+                //             userId: model.userId,
+                //             contentId: content.id,
+                //             interactionType: "share"
+                //         })
+                //         await interaction.save({ transacation: txn })
+                //     }
+                //     if (oldContent?.likes > content.likes) {
+                //         await UserContent.destroy({
+                //             where: {
+                //                 userId: model.userId,
+                //                 contentId: content.id,
+                //                 interactionType: "like"
+                //             },
+                //             transaction: txn
+                //         })
+                //     }
 
-            }
-            await Content.update(
-                {
-                    title: content.title,
-                    contentText: content.contentText,
-                    topic: content.topic,
-                    type: content.type,
-                    likes: content.likes,
-                    shares: content.shares,
-                    approve: content.approve
-                },
-                {
+                // }
+                await UserContent.destroy({
                     where: {
-                        id: content.id
-                    }
+                        userId: model.userId,
+                        contentId: content.id
+                    },
+                    transaction: txn
+                })
+                let ratingArr = await UserContent.findAll({
+                    where: {
+                        contentId: content.id
+                    },
+                    attributes: ['rating']
+                })
+                let sum = 0;
+                for (let i in ratingArr) {
+                    sum += ratingArr[i].rating;
                 }
+                console.log(sum)
+                let newRating = sum;
+                newRating += content.rating;
+                newRating /= (ratingArr.length + 1)
+                interaction = new UserContent({
+                    userId: model.userId,
+                    contentId: content.id,
+                    interactionType: "rating",
+                    rating: content.rating
+                })
+                await interaction.save({ transacation: txn })
+                console.log(interaction)
 
-            )
+                console.log("hello")
+                await Content.update(
+                    {
+                        title: content.title,
+                        contentText: content.contentText,
+                        topic: content.topic,
+                        type: content.type,
+                        rating: newRating,
+                        shares: content.shares,
+                        approve: content.approve
+                    },
+                    {
+                        where: {
+                            id: content.id
+                        }
+                    },
 
-            await txn.commit();
-            return true;
+
+                )
+
+
+
+                await txn.commit();
+                return true;
+            }
         }
         catch (error) {
             if (txn) await txn.rollback();
+            console.log(error)
             throw Error(error);
         }
     }

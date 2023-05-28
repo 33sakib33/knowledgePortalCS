@@ -4,41 +4,37 @@ import { CommentService } from '../comment.service';
 import { ContentService } from '../content.service';
 
 @Component({
-  selector: 'app-blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css']
+  selector: 'app-forumpage',
+  templateUrl: './forumpage.component.html',
+  styleUrls: ['./forumpage.component.css']
 })
-export class BlogComponent implements OnInit {
+export class ForumpageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private contentService: ContentService, private commentService: CommentService) { }
+  constructor(private contentService: ContentService, private route: ActivatedRoute, private commentService: CommentService) { }
   id: number = 0;
   blog: any = {};
-  comments: any;
+  comments: any = {}
   newComment: string = "";
+  userName: string | any = "";
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params: { [x: string]: number; }) => {
       console.log(params)
       this.id = params['id'];
     });
     this.getContent()
+    this.userName = localStorage.getItem('user');
   }
-  getContent = () => {
-
+  getContent() {
     let data = {
       content: {
-        id: this.id
+        id: this.id,
       }
-    }
-    let data2 = {
-      comment: {
-        contentId: this.id
-      }
-    }
 
-    this.contentService.getContent(data).subscribe(
+    }
+    this.contentService.getContentByTopic(data).subscribe(
       response => {
         this.blog = response.rows[0];
-        console.log(this.blog)
+
         // this.route.navigate(['login']);
       },
       error => {
@@ -46,6 +42,11 @@ export class BlogComponent implements OnInit {
         console.error('Registration failed:', error);
       }
     );
+    let data2 = {
+      comment: {
+        contentId: this.id
+      }
+    }
     this.commentService.getAllComment(data2).subscribe(
       response => {
         this.comments = response.rows;
@@ -58,14 +59,8 @@ export class BlogComponent implements OnInit {
       }
     );
 
-  }
-
-  ratingReceived(rating: number) {
-    this.blog.rating = rating;
-
 
   }
-
   makeComment = () => {
     if (this.newComment) {
       let pload = {
@@ -86,7 +81,5 @@ export class BlogComponent implements OnInit {
       );
     }
   }
-  addToFav() {
 
-  }
 }

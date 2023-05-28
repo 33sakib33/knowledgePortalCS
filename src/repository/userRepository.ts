@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { Context } from "../utils/StrategyPattern";
 import { Op } from "sequelize";
+import { Content } from "../models/Content";
 
 // import { UserRole } from "../models/UserRole";
 // import { UserSerializer } from "../serializers/userSerializer";
@@ -136,16 +137,26 @@ export class UserRepository implements IUserRepo {
         })
       }
       else {
-        let obj = {
-          user: model
-        }
-        let qstr = context.preprocess(obj, ["email"], ["fullName"], [], null, null, null)
+        let obj = model.user;
+        console.log(obj)
+        let includeObj = [
+          {
+            model: Content,
+            required: false,
+            as: 'createdContent',
+            order: [['Content.createdAt', 'DESC']]
+
+          }
+        ]
+        let qstr = context.preprocess(model, ["email", "id"], [], [], null, null, includeObj)
+        console.log(qstr)
         console.log(qstr.where[Object.keys(qstr.where)[0]])
         users = await User.findAll(qstr);
       }
       return users;
     }
     catch (error) {
+      console.log(error)
       throw Error(error)
     }
   }

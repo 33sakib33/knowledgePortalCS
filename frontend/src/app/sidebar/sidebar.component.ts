@@ -27,5 +27,19 @@ export class SidebarComponent implements OnInit {
     console.log("here")
     this.route.navigate(['login']);
   }
+  goHome() {
+    console.log("here")
+    this.route.navigate(['']);
+  }
+  community() {
+    console.log("here")
+    this.route.navigate(['forums']);
+  }
+  profile() {
+    console.log("here")
+    this.route.navigate(['profile']);
+  }
+
+
 
 }

@@ -8,6 +8,7 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
+  // API_URL = "http://localhost:3000/geekbangla/api/user"
   API_URL = "http://localhost:3000/geekbangla/api/user"
   //API_URL = "192.168.0.101:3000/"
 

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-forum-items',
@@ -8,12 +9,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ForumItemsComponent implements OnInit {
   @Input('title') title: string = '';
   @Input('description') description: string = '';
+  @Input('id') id: number = 0;
   @Output('itemClicked') itemClicked: EventEmitter<void> = new EventEmitter<void>();
 
   handleClick() {
-    this.itemClicked.emit();
+    this.route.navigate(['forumpage', this.id])
   }
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit(): void {
   }
