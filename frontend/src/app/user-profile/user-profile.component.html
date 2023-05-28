@@ -3,13 +3,14 @@
     <div class="grid grid-cols-1 md:grid-cols-3">
       <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
         <div>
-          <p class="font-bold text-gray-700 text-xl">2</p>
-          <p class="text-gray-400">Favorites</p>
-        </div>
-        <div>
-          <p class="font-bold text-gray-700 text-xl">7</p>
+          <p class="font-bold text-gray-700 text-xl">{{createdCount}}</p>
           <p class="text-gray-400">Posts</p>
         </div>
+        <div>
+          <p class="font-bold text-gray-700 text-xl">{{favCount}}</p>
+          <p class="text-gray-400">Favorites</p>
+        </div>
+       
         <!-- <div>
           <p class="font-bold text-gray-700 text-xl">89</p>
           <p class="text-gray-400">Comments</p>
@@ -56,7 +57,7 @@
       <div>
         <h2 class="text-2xl font-bold mb-4">Favorites</h2>
         <ul class="list-disc">
-          <li *ngFor="let itr of userdata.createdContent" class="mb-8">
+          <li *ngFor="let itr of userdata.favvoriteContents" class="mb-8">
             <app-blogcards [blog]="itr"></app-blogcards>
           </li>
         </ul>

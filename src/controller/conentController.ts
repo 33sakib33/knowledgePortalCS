@@ -84,6 +84,17 @@ export class ContentController {
             res.status(401).send(error)
         }
     }
+    addFav = async (req, res) => {
+        try {
+            let model = req.body;
+            console.log(model);
+            let status = await this._contentRepository.addFav(model);
+            res.status(200).send(status)
+        }
+        catch (error) {
+            res.status(401).send(error)
+        }
+    }
 
 
 }

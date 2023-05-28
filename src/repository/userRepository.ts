@@ -146,7 +146,14 @@ export class UserRepository implements IUserRepo {
             as: 'createdContent',
             order: [['Content.createdAt', 'DESC']]
 
-          }
+          },
+          {
+            model: Content,
+            required: false,
+            as: 'favvoriteContents',
+            order: [['Content.createdAt', 'DESC']]
+
+          },
         ]
         let qstr = context.preprocess(model, ["email", "id"], [], [], null, null, includeObj)
         console.log(qstr)

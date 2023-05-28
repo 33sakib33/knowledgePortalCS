@@ -12,18 +12,15 @@ import { UserService } from '../user.service';
 export class UserProfileComponent implements OnInit {
 
 
-  totalSells: number = 12;
-  totalBuys !: any;
-  totalIncome: number = 20000;
-  totalMoneySpent: number = 550000;
-  recentBids!: any;
-  show: number = 0;
-  click: boolean = false;
+
+
 
   constructor(private router: Router, private userService: UserService, private contentService: ContentService) { }
 
   userdata: any;
   authenticated: boolean = false;
+  favCount: number = 0;
+  createdCount: number = 0;
 
   ngOnInit(): void {
     console.log("here")
@@ -50,6 +47,8 @@ export class UserProfileComponent implements OnInit {
         // Assuming authentication is successful, store the token and user details in localStorage
         this.userdata = response[0]
         this.userdata.createdContent = this.userdata.createdContent.reverse()
+        this.favCount = this.userdata.favvoriteContents.length;
+        this.createdCount = this.userdata.createdContent.length;
         console.log("here1")
         console.log(this.userdata)
       },

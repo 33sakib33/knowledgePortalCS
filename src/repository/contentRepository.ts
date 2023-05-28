@@ -4,6 +4,7 @@ import { Content } from "../models/Content";
 import { QueryTypes } from "sequelize";
 import { UserContent } from "../models/UserContent";
 import { User } from "../models/User";
+import { UserFavorites } from "../models/UserFavorites";
 
 // import { UserRole } from "../models/UserRole";
 // import { UserSerializer } from "../serializers/userSerializer";
@@ -15,7 +16,8 @@ export interface IContentRepo {
     getContent(model: any): Promise<any>;
     deleteContent(model: any): Promise<any>
     interact(model: any): Promise<any>
-    getRecommendations(model: any): Promise<any>;
+    getRecommendations(model: any): Promise<any>
+    addFav(model: any): Promise<any>;
 }
 
 export class ContentRepository implements IContentRepo {
@@ -277,6 +279,26 @@ export class ContentRepository implements IContentRepo {
         }
         catch (error) {
             throw Error(error);
+        }
+    }
+    addFav = async (model: any) => {
+        let txn;
+        try {
+            console.log("here")
+            txn = await sequelize.transaction();
+            let userFav = new UserFavorites({
+                userId: model.userId,
+                contentId: model.contentId
+            })
+            console.log(userFav)
+            await userFav.save({ transaction: txn })
+            await txn.commit();
+
+        }
+        catch (error) {
+            if (!txn) await txn.rollback();
+            console.log(error);
+            throw Error(error)
         }
     }
 
