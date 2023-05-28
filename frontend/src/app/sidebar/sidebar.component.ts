@@ -22,6 +22,8 @@ export class SidebarComponent implements OnInit {
 
   logout(): void {
     this.loginService.logout();
+    window.location.reload();
+
   }
   login() {
     console.log("here")

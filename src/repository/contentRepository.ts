@@ -22,6 +22,7 @@ export interface IContentRepo {
     getRecommendations(model: any): Promise<any>
     addFav(model: any): Promise<any>;
     deleteFav(model: any): Promise<any>
+    isFav(model: any): Promise<any>
 }
 
 export class ContentRepository implements IContentRepo {
@@ -159,6 +160,10 @@ export class ContentRepository implements IContentRepo {
                 console.log(qstr.where[Object.keys(qstr.where)[0]])
                 content = await Content.findAndCountAll(qstr);
             }
+            for (let i = 0; i < content.length; i++) {
+                if (!content[i].user.fullName) content[i].user.fullName = "No Name"
+                if (!content[i].user.rank) content[i].user.rank = "Unranked"
+            }
             return content;
         }
         catch (error) {
@@ -278,12 +283,13 @@ export class ContentRepository implements IContentRepo {
     deleteFav = async (model: any) => {
         let txn;
         try {
-
+            console.log(model)
+            console.log("-----------------------------------------------------------------")
             txn = await sequelize.transaction();
             await UserFavorites.destroy({
                 where: {
                     userId: model.userId,
-                    contentId: model.contentId
+                    contentId: model.content.id
                 },
                 transaction: txn
             })
@@ -296,5 +302,22 @@ export class ContentRepository implements IContentRepo {
             throw Error(error)
         }
     }
+    isFav = async (model: any) => {
+        try {
+            let obj = await UserFavorites.findOne({
+                where: {
+                    userId: model.userId,
+                    contentId: model.content.id
+                }
+            })
+            if (obj) return true;
+            else return false;
+        }
+        catch (error) {
+            console.log(error)
+            throw Error(error)
+        }
+    }
+
 
 }

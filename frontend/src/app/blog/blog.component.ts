@@ -16,6 +16,7 @@ export class BlogComponent implements OnInit {
   comments: any;
   newComment: string = "";
   userId: any = -1;
+  fav: boolean = false;
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       console.log(params)
@@ -23,6 +24,8 @@ export class BlogComponent implements OnInit {
     });
     this.userId = localStorage.getItem("userId")
     this.getContent()
+    this.isFav()
+
   }
   getContent = () => {
 
@@ -99,7 +102,46 @@ export class BlogComponent implements OnInit {
       response => {
 
         console.log(response)
-        alert("added to favorites")
+        // alert("added to favorites")
+        window.location.reload()
+        // this.route.navigate(['login']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
+  }
+  isFav() {
+    let data = {
+      content: {
+        id: this.id
+      }
+    }
+    this.contentService.isFav(data).subscribe(
+      response => {
+
+        this.fav = response.status;
+        // window.location.reload()
+        // this.route.navigate(['login']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
+  }
+  deleteFav() {
+    let data = {
+      content: {
+        id: this.id
+      }
+    }
+    this.contentService.deleteFav(data).subscribe(
+      response => {
+
+        this.fav = response.status;
+        window.location.reload()
         // this.route.navigate(['login']);
       },
       error => {

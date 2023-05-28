@@ -5,6 +5,10 @@ import * as jwt from "jsonwebtoken";
 import { Context } from "../utils/StrategyPattern";
 import { Op } from "sequelize";
 import { Content } from "../models/Content";
+import { UserCategory } from "../models/UserCategory";
+// import { UserComment } from "../models/UserComment";
+// import { UserContent } from "../models/UserContent";
+import { Category } from "../models/Category";
 
 // import { UserRole } from "../models/UserRole";
 // import { UserSerializer } from "../serializers/userSerializer";
@@ -28,7 +32,16 @@ export class UserRepository implements IUserRepo {
         password: user.password,
         userName: user.userName
       })
-      await userObj.save({ transaction: txn })
+      let saved = await userObj.save({ transaction: txn })
+      let categories = await Category.findAll();
+      for (let i in categories) {
+        let userCatObj = new UserCategory({
+          score: 0,
+          userId: saved.id,
+          categoryId: categories[i].id
+        })
+        await userCatObj.save({ transaction: txn })
+      }
 
       await txn.commit();
       return true;
@@ -144,14 +157,29 @@ export class UserRepository implements IUserRepo {
             model: Content,
             required: false,
             as: 'createdContent',
-            order: [['Content.createdAt', 'DESC']]
+            order: [['Content.createdAt', 'DESC']],
+            include: [
+              {
+                model: User,
+                as: 'user',
+                required: false
+              }
+            ]
+
 
           },
           {
             model: Content,
             required: false,
             as: 'favvoriteContents',
-            order: [['Content.createdAt', 'DESC']]
+            order: [['Content.createdAt', 'DESC']],
+            include: [
+              {
+                model: User,
+                as: 'user',
+                required: false
+              }
+            ]
 
           },
         ]
@@ -167,6 +195,48 @@ export class UserRepository implements IUserRepo {
       throw Error(error)
     }
   }
+  // deleteUser = async (model: any) => {
+  //   let txn;
+  //   try {
+  //     txn = await sequelize.transaction();
+  //     await UserCategory.destroy({
+  //       where: {
+  //         userId: model.user.id
+  //       }, transaction: txn
+  //     }
+
+  //     )
+  //     await UserComment.destroy({
+  //       where: {
+  //         userId: model.user.id
+  //       }, transaction: txn
+  //     }
+
+  //     )
+
+  //     await UserContent.destroy({
+  //       where: {
+  //         userId: model.user.id
+  //       }, transaction: txn
+  //     })
+  //     let contents = await Content.findAll({
+  //       where: {
+  //         createdBy: model.user.id
+  //       }
+  //     })
+  //     for(let i in contents){
+  //       await UserContent.destroy({
+  //         where: {
+  //           userId: model.user.id
+  //         }, transaction: txn
+  //       })
+  //     }
+
+  //   }
+  //   catch (error) {
+  //     throw Error(error)
+  //   }
+  // }
 
 
 

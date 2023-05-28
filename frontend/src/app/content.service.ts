@@ -46,5 +46,16 @@ export class ContentService {
     const header = new HttpHeaders().set('Authorization', token);
     return this.http.post<any>(`${this.API_URL}/delete`, data, { headers: header });
   }
+  isFav(data: any) {
+    let token: any = localStorage.getItem('token')
+    const header = new HttpHeaders().set('Authorization', token);
+    return this.http.post<any>(`${this.API_URL}/isFav`, data, { headers: header });
+  }
+  deleteFav(data: any) {
+    let token: any = localStorage.getItem('token')
+    const header = new HttpHeaders().set('Authorization', token);
+    return this.http.post<any>(`${this.API_URL}/deleteFav`, data, { headers: header });
+  }
+
 
 }

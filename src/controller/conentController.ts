@@ -108,6 +108,21 @@ export class ContentController {
             let model = req.body;
             console.log(model);
             let status = await this._contentRepository.deleteFav(model);
+            if (status == 1) status = false;
+            else status = true;
+            res.status(200).json({
+                "status": status
+            })
+        }
+        catch (error) {
+            res.status(401).send(error)
+        }
+    }
+    isFav = async (req, res) => {
+        try {
+            let model = req.body;
+            console.log(model);
+            let status = await this._contentRepository.isFav(model);
             res.status(200).json({
                 "status": status
             })

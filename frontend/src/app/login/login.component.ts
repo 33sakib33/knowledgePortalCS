@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit {
   password: string = "";
   str = "Explore and Learn";
   ngOnInit(): void {
+    if (localStorage.getItem('token')) {
+      this.route.navigate([''])
+    }
   }
 
   login() {
@@ -36,7 +39,9 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(response.userName));
           console.log(response)
           this.cookieService.set('token', response['token'])
+          window.location.reload();
           this.route.navigate([''])
+
         },
         error => {
           // Handle authentication error

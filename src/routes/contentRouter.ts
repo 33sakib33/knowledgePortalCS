@@ -13,5 +13,7 @@ contentRoute.post("/get", contentInstance.getContent);
 contentRoute.post("/delete", checkJwt, contentInstance.deleteContent);
 contentRoute.post("/recommend", contentInstance.recommend);
 contentRoute.post("/addFav", checkJwt, contentInstance.addFav);
-contentRoute.post("/deleteFav", checkJwt, contentInstance.addFav);
+contentRoute.post("/deleteFav", checkJwt, contentInstance.deleteFav);
+contentRoute.post("/isFav", checkJwt, contentInstance.isFav);
+
 

@@ -16,6 +16,7 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.getContent();
   }
   ngOnChanges(): void {
@@ -23,6 +24,7 @@ export class FeedComponent implements OnInit {
     this.getContent();
   }
   getContent = () => {
+    // window.location.reload();
     let data = {
       content: {
         type: "blog"
