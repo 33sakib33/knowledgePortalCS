@@ -14,6 +14,7 @@ import {
 } from "sequelize-typescript";
 import { User } from "./User";
 import { UserContent } from "./UserContent";
+import { UserFavorites } from "./UserFavorites";
 
 // import { Role } from "./Role";
 
@@ -24,7 +25,7 @@ export class Content extends Model {
     @AllowNull(true)
     @Column
     title!: string;
-    
+
     @AllowNull(true)
     @Column
     ratingCount!: number;
@@ -78,6 +79,9 @@ export class Content extends Model {
 
     @BelongsToMany(() => User, () => UserContent)
     interactedUser?: User[];
+    
+    @BelongsToMany(() => User, () => UserFavorites)
+    favoredUsers?: User[];
 
 
     @BeforeCreate

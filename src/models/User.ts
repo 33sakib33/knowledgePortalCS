@@ -14,6 +14,7 @@ import {
 import bcrypt from "bcryptjs";
 import { Content } from "./Content";
 import { UserContent } from "./UserContent";
+import { UserFavorites } from "./UserFavorites";
 
 // import { Role } from "./Role";
 
@@ -46,8 +47,8 @@ export class User extends Model {
   @Column
   rank!: string
 
-  @HasMany(()=>Content)
-  createdContent!:Content[];
+  @HasMany(() => Content)
+  createdContent!: Content[];
 
   @CreatedAt
   @Column
@@ -64,6 +65,9 @@ export class User extends Model {
 
   @BelongsToMany(() => Content, () => UserContent)
   interactedContent?: Content[];
+
+  @BelongsToMany(() => Content, () => UserFavorites)
+  favvoriteContents?: Content[];
 
 
 

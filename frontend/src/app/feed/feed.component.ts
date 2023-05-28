@@ -13,6 +13,7 @@ export class FeedComponent implements OnInit {
   blogs = new Array();
   searchParam: any = "";
   headTitle = "Latest";
+
   ngOnInit(): void {
 
     this.getContent();
