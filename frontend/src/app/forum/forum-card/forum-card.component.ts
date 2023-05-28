@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContentService } from 'src/app/content.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class ForumCardComponent implements OnInit {
   @Input() title: string = '';
   @Input() details: string = '';
   @Input() headerColor: string = '';
-  constructor(private contentService: ContentService) { }
+  constructor(private contentService: ContentService, private router: Router) { }
 
   ngOnInit(): void {
     this.getContentByTopic();
@@ -47,6 +48,9 @@ export class ForumCardComponent implements OnInit {
     );
 
 
+  }
+  createQuestion() {
+    this.router.navigate(['createQuestion', this.title])
   }
 
 }

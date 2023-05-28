@@ -11,6 +11,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ForumComponent } from './forum/forum.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { ForumpageComponent } from './forumpage/forumpage.component';
+import { CreateQuestionComponent } from './create-question/create-question.component';
 
 const routes: Routes = [
   { path: '', component: FeedComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'createBlog', component: CreateBlogComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'forumpage/:id', component: ForumpageComponent },
+  { path: 'createQuestion/:type', component: CreateQuestionComponent },
 
 ];
 

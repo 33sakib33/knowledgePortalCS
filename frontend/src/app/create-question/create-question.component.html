@@ -1,0 +1,20 @@
+<div class="flex justify-center">
+    <h3 class="font-mono mb-2 mt-0 text-3xl font-bold leading-tight py-10">
+      Ask away
+    </h3>
+  </div>
+<div class="create-post  bg-[#F6F1F1]">
+
+<label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
+<textarea [(ngModel)]="questionTitle" [ngModelOptions]="{standalone:true}" id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ask the question"></textarea>
+
+    <textarea [(ngModel)]="questionText" [ngModelOptions]="{standalone:true}" class="post-text" placeholder="Elaborate"></textarea>
+    <div class="post-options">
+ 
+      <button (click)="postQuestion()" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
+        <span class="submit-icon"><i class="fa fa-check"></i></span>
+        Post
+      </button>
+    </div>
+  </div>
+  

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -12,7 +12,9 @@ export class ContentService {
   //API_URL = "192.168.0.101:3000/"
 
   createContent(data: any) {
-    return this.http.post<any>(`${this.API_URL}/create`, data);
+    let token: any = localStorage.getItem('token')
+    const header = new HttpHeaders().set('Authorization', token);
+    return this.http.post<any>(`${this.API_URL}/create`, data, { headers: header });
   }
 
   updateContent(data: any) {

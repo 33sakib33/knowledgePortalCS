@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ContentService } from '../content.service';
 
 @Component({
   selector: 'app-create-blog',
@@ -7,13 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateBlogComponent implements OnInit {
 
-  constructor() { }
+  constructor(private contentService: ContentService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   handleImageUpload(event: any) {
-    
-  }
 
+  }
+  createPost() {
+
+  }
 }
