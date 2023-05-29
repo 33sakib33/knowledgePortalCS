@@ -15,14 +15,35 @@ export class RecommendedFeedComponent implements OnInit {
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
 
-    if (this.userId) this.getRecs();
+    if (this.userId) this.train();
+    if (this.userId) this.recommend();
 
   }
-  getRecs = () => {
+  train = () => {
     let data = {
       userId: this.userId
     }
-    this.contentService.recGet(data).subscribe(
+    this.contentService.train(data).subscribe(
+      response => {
+        this.recommendations = response.recommendations;
+        this.getContent(this.recommendations[0][0]);
+        this.getContent(this.recommendations[1][0])
+        this.getContent(this.recommendations[2][0])
+        console.log(this.blogs)
+        // this.route.navigate(['login']);
+      },
+      error => {
+        // Handle authentication error
+        console.error('Registration failed:', error);
+      }
+    );
+
+  }
+  recommend = () => {
+    let data = {
+      userId: this.userId
+    }
+    this.contentService.recommend(data).subscribe(
       response => {
         this.recommendations = response.recommendations;
         this.getContent(this.recommendations[0][0]);

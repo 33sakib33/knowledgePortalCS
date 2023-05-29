@@ -9,7 +9,7 @@ export class ContentService {
   constructor(private http: HttpClient) { }
   // API_URL = "http://10.100.103.68:3000/geekbangla/api/content"
   API_URL = "http://localhost:3000/geekbangla/api/content"
-  API_URL2 = "http://localhost:3000/geekbangla/api/category"
+  API_URL2 = "http://localhost:8000/"
   //API_URL = "192.168.0.101:3000/"
 
   createContent(data: any) {
@@ -63,11 +63,18 @@ export class ContentService {
     const header = new HttpHeaders().set('Authorization', token);
     return this.http.post<any>(`${this.API_URL}/deleteFav`, data, { headers: header });
   }
-  recGet(data: any) {
-    let token: any = localStorage.getItem('token')
-    const header = new HttpHeaders().set('Authorization', token);
-    return this.http.post<any>(`${this.API_URL}/recommend`, data, { headers: header });
-  }
+  // recGet(data: any) {
+  //   let token: any = localStorage.getItem('token')
+  //   const header = new HttpHeaders().set('Authorization', token);
+  //   return this.http.post<any>(`${this.API_URL}/recommend`, data, { headers: header });
+  // }
+  train(data: any) {
 
+    return this.http.get<any>(`${this.API_URL2}train`);
+  }
+  recommend(data: any) {
+
+    return this.http.get<any>(`${this.API_URL2}recommend/` + data.userId);
+  }
 
 }
