@@ -8,6 +8,10 @@ import { UserFavorites } from "../models/UserFavorites";
 import { UserComment } from "../models/UserComment";
 import { Comment } from "../models/Comment";
 import { Category } from "../models/Category";
+import { UserCategory } from "../models/UserCategory";
+import axios from "axios";
+// import { UserCategory } from "../models/UserCategory";
+// import { connect } from "http2";
 
 // import { UserRole } from "../models/UserRole";
 // import { UserSerializer } from "../serializers/userSerializer";
@@ -37,7 +41,8 @@ export class ContentRepository implements IContentRepo {
                 contentText: content.contentText,
                 topic: content.topic,
                 type: content.type,
-                createdBy: model.userId
+                createdBy: model.userId,
+                categoryId: content.categoryId
             })
             await contentObj.save({ transaction: txn })
 
@@ -60,31 +65,108 @@ export class ContentRepository implements IContentRepo {
             //         id: content.id
             //     }
             // })
+            await UserContent.destroy({
+                where: {
+                    contentId: content.id,
+                    userId: model.userId,
+                },
+                transaction: txn
+            })
+
             let interaction = new UserContent({
                 userId: model.userId,
                 contentId: content.id,
                 interactionType: "rating",
-                rating: content.rating
+                rating: model.newRating
             })
             await interaction.save({ transaction: txn })
+            let result = await UserContent.findAll({
+                where: {
+                    contentId: content.id,
+
+
+                },
+                include: [
+                    {
+                        model: Content
+
+                    }
+                ],
+                raw: true,
+                nest: true
+            })
+            let result1 = await UserContent.findAll({
+                where: {
+                    // contentId: content.id,
+                    userId: model.userId
+
+                },
+                include: [
+                    {
+                        model: Content
+
+
+                    }
+                ],
+                raw: true,
+                nest: true
+            })
+            console.log(result)
+            let sum = 0;
+            let sumSameCat = 0;
+            if (result)
+                for (let i in result) {
+                    sum += Number(result[i].rating)
+
+                }
+            let count1 = 0;
+            if (result1)
+                for (let i in result1) {
+                    if (result1[i].content.categoryId == model.content.categoryId) {
+
+                        console.log(result1[i].content.id)
+                        sumSameCat += Number(result1[i].rating)
+                        count1++;
+                    }
+
+
+                }
+            console.log("count------------------------------------- " + count1)
+            if (count1 == 0) count1 = 1;
+            let avgScore = sumSameCat / count1;
+            await UserCategory.update({
+                score: avgScore
+            }, {
+                where: {
+                    categoryId: model.content.categoryId,
+                    userId: model.userId
+                },
+                transaction: txn
+            })
+            let avgRating = sum / result.length;
+            // avgRating = Math.ceil(avgRating)
+            console.log(sum)
+            console.log(avgRating)
+            console.log("--------------------------------")
             await Content.update(
                 {
                     title: content.title,
                     contentText: content.contentText,
                     topic: content.topic,
                     type: content.type,
-                    rating: content.rating,
+                    rating: avgRating,
                     shares: content.shares,
                     approve: content.approve
                 },
                 {
                     where: {
                         id: content.id
-                    }
+                    },
+                    transaction: txn
                 },
 
-
             )
+
             await txn.commit();
             return true;
         }
@@ -254,7 +336,38 @@ export class ContentRepository implements IContentRepo {
     }
     getRecommendations = async (model: any) => {
         try {
+            console.log(model)
+        
+            let rl = "http://localhost:8000";
+            let config = {
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: rl + '/train/',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': 'connect.sid=s%3ATuP4sJ-q-1RMOWWMcNKyo4hcdaGoH6_U.5J4KlUj249uSK%2FUExPIm12XHnQ3%2BMHX24lYE2V4Rc0U'
+                },
+                
+            };
 
+
+            let res = await axios.request(config);
+            // let rl = "http://localhost:8000";
+            let config2 = {
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: rl + '/recommend/'+ model.userId,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': 'connect.sid=s%3ATuP4sJ-q-1RMOWWMcNKyo4hcdaGoH6_U.5J4KlUj249uSK%2FUExPIm12XHnQ3%2BMHX24lYE2V4Rc0U'
+                },
+                
+            };
+            console.log(res.data);
+            let res2 = await axios.request(config2);
+            console.log("hellllllllllllllllllllllllllllllllllllllllllll")
+            console.log(res2.data)
+            return res2.data;
         }
         catch (error) {
             throw Error(error);

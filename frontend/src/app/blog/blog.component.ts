@@ -64,7 +64,9 @@ export class BlogComponent implements OnInit {
     );
 
   }
+  editContent() {
 
+  }
   ratingReceived(rating: number) {
     this.blog.rating = rating;
 

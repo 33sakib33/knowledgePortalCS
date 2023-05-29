@@ -23,7 +23,7 @@ export class UserCategory extends Model {
 
     @AllowNull(true)
     @Column
-    score!: number;
+    score!: string;
 
     @BelongsTo(() => User)
     user!: User;

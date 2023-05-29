@@ -19,10 +19,12 @@
     <p class="mt-6 leading-8 text-black-700 text-xl">{{blog.contentText}}</p>
     <button *ngIf="!fav" class="button bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg mt-4" (click)="addToFav()">Add to favorites</button>
     <button *ngIf="fav" class="button bg-gray-800 hover:bg-blue-600 text-white py-3 px-6 rounded-lg mt-4" (click)="deleteFav()">Remove From favorites</button>
-
+    
     <button *ngIf="blog.createdBy==userId"class="button bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-lg ml-2 mt-4" (click)="deleteContent()">Delete</button>
+    <button *ngIf="blog.createdBy == userId" class="button bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded-lg ml-2 mt-4" (click)="editContent()">Edit</button>
+
   </div>
-  <app-rating [type]="'blog'" (ratingEmitter)="ratingReceived($event)"></app-rating>
+  <app-rating [type]="'blog'" [blog]="blog" (ratingEmitter)="ratingReceived($event)"></app-rating>
 
   <div class="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
     <div class="flex flex-wrap -mx-3 mb-6">

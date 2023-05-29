@@ -1,1 +1,12 @@
-<p>recommended-feed works!</p>
+<div class="grid grid-cols-1 gap-x-8 gap-y-16 pl-10">
+    <!-- First List -->
+    <div *ngIf="userId">
+      <h2  class="text-2xl font-bold mb-4 pt-24">Recommendations</h2>
+      <ul class="list-disc">
+        <li *ngFor="let card of blogs" class="mb-8">
+            <app-blogcards [blog]="card"></app-blogcards>
+          </li>
+      </ul>
+    </div>
+    <h2 *ngIf="!userId"  class="text-2xl font-bold mb-4 pt-24">Log in to get recommendations</h2>
+</div>

@@ -13,10 +13,13 @@ export class CreateBlogComponent implements OnInit {
   selectedCategory: string = "";
   blogTitle: string = "";
   blogContent: string = ""
+  cats: any;
   ngOnInit(): void {
+    this.getCategory()
   }
 
   handleImageUpload(event: any) {
+
 
   }
   createBlog() {
@@ -25,8 +28,9 @@ export class CreateBlogComponent implements OnInit {
       content: {
         contentText: this.blogContent,
         type: 'blog',
-        topic: this.selectedCategory,
-        title: this.blogTitle
+        categoryId: this.selectedCategory,
+        topic: this.cats[Number(this.selectedCategory)-1].topic,
+        title: this.blogTitle,
       }
     }
     this.contentService.createContent(data).subscribe(
@@ -35,6 +39,20 @@ export class CreateBlogComponent implements OnInit {
         alert("posted")
         console.log("posted")
         this.router.navigate([''])
+      },
+      error => {
+        // Handle authentication error
+        console.error('Login failed:', error);
+      }
+    );
+  }
+  getCategory() {
+
+    this.contentService.getCategory().subscribe(
+      response => {
+        // Assuming authentication is successful, store the token and user details in localStorage
+        this.cats = response;
+        console.log(this.cats)
       },
       error => {
         // Handle authentication error

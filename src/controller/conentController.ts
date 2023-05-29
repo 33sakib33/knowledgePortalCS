@@ -35,7 +35,7 @@ export class ContentController {
     updateContent = async (req, res) => {
         try {
             let ContentObject = req.body;
-            console.log("content")
+            console.log(ContentObject)
             await this._contentRepository.updateContent(ContentObject);
             return res.status(200).json({
                 "status": "updated"

@@ -46,7 +46,7 @@ export class Content extends Model {
 
     @AllowNull(true)
     @Column
-    rating!: number;
+    rating!: string;
 
     @AllowNull(true)
     @Column
@@ -97,7 +97,7 @@ export class Content extends Model {
     @BeforeCreate
     static rankDefautl(instance: Content) {
         instance.approve = false;
-        instance.rating = 0;
+        instance.rating = "0";
         instance.shares = 0;
         instance.ratingCount = 0;
     }

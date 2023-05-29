@@ -29,6 +29,7 @@ export class LoginService {
     // Remove the token and user details from localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('userId');
   }
 
   getUserDetails(): any {
