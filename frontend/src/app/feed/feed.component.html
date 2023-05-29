@@ -1,10 +1,10 @@
 <div class="bg-white py-12 sm:py-16">
   <div class="relative">
     <div class="grid grid-cols-4 grid-flow-row items-center">
-      <div class="col-span-1">
+      <div class="col-span-1 pl-10">
         <input [(ngModel)]="searchParam" [ngModelOptions]="{standalone:true}" type="search" id="default-search" class="p-4 pl-10 w-200 text-sm text-gray-900 bg-gray-50 rounded-lg border border-blue-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search articles">
       </div>
-      <div class="col-span-2">
+      <div class="col-span-2 pl-4">
         <button (click)="searchGet()" type="submit" class="text-white text-xl font-bold right-2.5 bottom-2.5 bg-[#526D82] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
       </div>
       <div class="col-span-1 align-items-center">
