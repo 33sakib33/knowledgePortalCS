@@ -65,7 +65,7 @@ export class BlogComponent implements OnInit {
 
   }
   editContent() {
-
+    this.router.navigate(['edotblog'])
   }
   ratingReceived(rating: number) {
     this.blog.rating = rating;

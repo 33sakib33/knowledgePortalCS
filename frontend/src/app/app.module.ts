@@ -22,6 +22,7 @@ import { ForumItemsComponent } from './forum/forum-card/forum-items/forum-items.
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { ForumpageComponent } from './forumpage/forumpage.component';
 import { CreateQuestionComponent } from './create-question/create-question.component';
+import { EditBlogComponent } from './edit-blog/edit-blog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CreateQuestionComponent } from './create-question/create-question.compo
     ForumItemsComponent,
     CreateBlogComponent,
     ForumpageComponent,
-    CreateQuestionComponent
+    CreateQuestionComponent,
+    EditBlogComponent
   ],
   imports: [
     BrowserModule,

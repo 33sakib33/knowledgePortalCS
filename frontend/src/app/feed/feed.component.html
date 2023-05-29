@@ -5,10 +5,10 @@
         <input [(ngModel)]="searchParam" [ngModelOptions]="{standalone:true}" type="search" id="default-search" class="p-4 pl-10 w-200 text-sm text-gray-900 bg-gray-50 rounded-lg border border-blue-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search articles">
       </div>
       <div class="col-span-2">
-        <button (click)="searchGet()" type="submit" class="text-white text-xl font-bold right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        <button (click)="searchGet()" type="submit" class="text-white text-xl font-bold right-2.5 bottom-2.5 bg-[#526D82] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
       </div>
       <div class="col-span-1 align-items-center">
-        <button (click)="createPost()" class="text-white text-xl font-bold right-2.5 bottom-2.5 bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create Blog</button>
+        <button (click)="createPost()" class="text-white text-xl font-bold right-2.5 bottom-2.5 bg-[#526D82] hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create Blog</button>
       </div>
     </div>
   </div>
@@ -16,11 +16,11 @@
   <div class="mx-auto max-w-7xl px-6 lg:px-8 mt-8">
     <div class="mx-auto max-w-2xl lg:mx-0">
       <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl font-mono">{{headTitle}}</h2>
-      <p class="mt-2 text-lg leading-8 text-gray-600">Choose from your stack</p>
+      <p class="mt-2 text-lg leading-8 text-gray-600">Keep on Learning</p>
     </div>
     
-    <div class="mx-auto mt-10 pt-4 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200  lg:mx-0 lg:max-w-none lg:grid-cols-3">
-        <div *ngFor="let card of blogs" ><app-blogcards [blog]="card"></app-blogcards></div>
+    <div class="mx-auto mt-10 pt-4 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-2  lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <div *ngFor="let card of blogs" class="bg-[#F6F1F1] hover:bg-[#ACBCFF] border-gray-900 rounded shadow-md max-h-xl max-w-xl"><app-blogcards [blog]="card"></app-blogcards></div>
       
     </div>
   </div>
