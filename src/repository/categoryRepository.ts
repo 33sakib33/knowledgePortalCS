@@ -1,5 +1,7 @@
 import { sequelize } from "../sequelize";
 import { Category } from "../models/Category";
+import { User } from "../models/User";
+import { UserCategory } from "../models/UserCategory";
 
 export interface ICategoryRepo {
     createCategory(category: any): Promise<Category | any>;
@@ -21,9 +23,20 @@ export class CategoryRepository implements ICategoryRepo {
                 type: category.type,
                 topic: category.topic,
             });
+            let users= await User.findAll({
+                
+            })
 
-            await categoryObj.save({ transaction: txn });
-
+            let cat=await categoryObj.save({ transaction: txn });
+            
+            for(let i =0;i<users.length;i++){
+                let userCcat= new UserCategory({
+                    userId:users[i].id,
+                    categoryId: cat.id,
+                    score:0
+                })
+                await userCcat.save({transaction:txn})
+            }
             await txn.commit();
             return true;
         } catch (error) {
