@@ -237,7 +237,7 @@ export class ContentRepository implements IContentRepo {
 
                     }
                 ]
-                let qstr = context.preprocess(obj, ["id", "createdBy", "type", "topic"], [], ["createdAt", "DESC"], true, null, includeobj)
+                let qstr = context.preprocess(obj, ["id", "createdBy", "type", "topic","categoryId"], [], ["createdAt", "DESC"], true, null, includeobj)
 
                 console.log(qstr.where[Object.keys(qstr.where)[0]])
                 content = await Content.findAndCountAll(qstr);
@@ -337,7 +337,7 @@ export class ContentRepository implements IContentRepo {
     getRecommendations = async (model: any) => {
         try {
             console.log(model)
-        
+
             let rl = "http://localhost:8000";
             let config = {
                 method: 'get',
@@ -347,7 +347,7 @@ export class ContentRepository implements IContentRepo {
                     'Content-Type': 'application/json',
                     'Cookie': 'connect.sid=s%3ATuP4sJ-q-1RMOWWMcNKyo4hcdaGoH6_U.5J4KlUj249uSK%2FUExPIm12XHnQ3%2BMHX24lYE2V4Rc0U'
                 },
-                
+
             };
 
 
@@ -356,14 +356,15 @@ export class ContentRepository implements IContentRepo {
             let config2 = {
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: rl + '/recommend/'+ model.userId,
+                url: rl + '/recommend/' + model.userId,
                 headers: {
                     'Content-Type': 'application/json',
                     'Cookie': 'connect.sid=s%3ATuP4sJ-q-1RMOWWMcNKyo4hcdaGoH6_U.5J4KlUj249uSK%2FUExPIm12XHnQ3%2BMHX24lYE2V4Rc0U'
                 },
-                
+
             };
-            console.log(res.data);
+            console.log(config2.url);
+            console.log(res)
             let res2 = await axios.request(config2);
             console.log("hellllllllllllllllllllllllllllllllllllllllllll")
             console.log(res2.data)

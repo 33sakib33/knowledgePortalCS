@@ -21,7 +21,7 @@
     <button *ngIf="fav" class="button bg-gray-800 hover:bg-blue-600 text-white py-3 px-6 rounded-lg mt-4" (click)="deleteFav()">Remove From favorites</button>
     
     <button *ngIf="blog.createdBy==userId"class="button bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-lg ml-2 mt-4" (click)="deleteContent()">Delete</button>
-    <button *ngIf="blog.createdBy == userId" class="button bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded-lg ml-2 mt-4" (click)="editContent()">Edit</button>
+    <!-- <button *ngIf="blog.createdBy == userId" class="button bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded-lg ml-2 mt-4" (click)="editContent()">Edit</button> -->
 
   </div>
   <app-rating [type]="'blog'" [blog]="blog" (ratingEmitter)="ratingReceived($event)"></app-rating>
